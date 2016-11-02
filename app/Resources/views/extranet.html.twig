@@ -59,19 +59,22 @@
         </ul>    
 {% endif %}  
       <ul class="nav navbar-nav navbar-right"> 
-          <li>
-              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-              <a href="{{ path('extranet_usuario_show', { 'id': app.user.id }) }}" >
-                  <span class="glyphicon glyphicon-user"></span>
-                  {{ app.user.username }}
 
-              </a> 
-              {% endif %}                   
-          </li>   
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span></a>
-            <ul class="dropdown-menu"
-              <li role="separator" class="divider"></li>
+            <ul class="dropdown-menu">
+               <li>
+                  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                  <a href="{{ path('extranet_usuario_show', { 'id': app.user.id }) }}" >
+                      <span class="glyphicon glyphicon-user"></span>
+                      {{ app.user.username }}
+
+                  </a> 
+                  {% endif %}                   
+                </li>
+              <li role="separator" class="divider"> </li>
+       
+
                <li class="dropdown-header h5">Cambiar contraseña <span class="caret"></span></li>                    
                           <form class="navbar-form"  method="post" action="{{ path('usuario_change_password') }}">
                             {% set passwordCurrent= app.user.password %}                  
@@ -114,6 +117,14 @@
               <li><a href="{{ path('usuario_logout') }}" class="bg-danger"> Cerrar sesion</p></a></li>
             </ul>
           </li>
+                   <li>
+                  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                  <a href="{{ path('extranet_usuario_show', { 'id': app.user.id }) }}" >
+                      <span class="glyphicon glyphicon-user"></span>
+                      Salir
+                  </a> 
+                  {% endif %}                   
+                </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div>
