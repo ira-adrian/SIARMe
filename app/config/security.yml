@@ -11,13 +11,13 @@ security:
         #agentes:
          #   entity: { class: Siarme\AusentismoBundle\Entity\Agente, property: usuario }
         # Usuarios del backend
-        administradores:
-            memory:
-                users:
+ #       administradores:
+  #          memory:
+   #             users:
                     # encriptado bcrypt pass(1234):  $2y$13$.WHHRIwltX9xGg.vj4hX1eAlInAaKtd4RgMq5oiWrjjhJo2Estir
                     #user = admin, pass = 1234
-                    admin: { password: $2y$13$.WHHRIwltX9xGg.vj4hX1eAlInAaKtd4RgMq5oiWrjjhJo2Estir , roles: ROLE_ADMIN }
-                    adrian: { password: $2y$13$5I.fTbRCuahPvcCInl462On57sPWl825DdXia9TGHL1Os3l7Z9GGu , roles: ROLE_USUARIO}
+    #                admin: { password: $2y$13$.WHHRIwltX9xGg.vj4hX1eAlInAaKtd4RgMq5oiWrjjhJo2Estir , roles: ROLE_ADMIN }
+     #               adrian: { password: $2y$13$5I.fTbRCuahPvcCInl462On57sPWl825DdXia9TGHL1Os3l7Z9GGu , roles: ROLE_USUARIO}
 
     # EL ORDEN DE LOS FIRWALLS INFLUYE EN CUANTO A LA RESTRICCION UNOS SON MAS GENERALES POR LO 
     #QUE TENDRAN QUE DEFINISRSE DESPUES
@@ -42,9 +42,9 @@ security:
                 target: usuario_login
 
             # Mantiene al usuario iniciada la seccion por 3600 seg
-            remember_me:
-                key: cupon1234
-                lifetime: 3600  
+           # remember_me:
+            #    key: cupon1234
+             #   lifetime: 3600  
 
         #main:
          #   anonymous: ~
@@ -70,7 +70,7 @@ security:
         # AppBundle\Entity\Usuario: { algorithm: 'bcrypt', cost: 6 }
 
         Siarme\UsuarioBundle\Entity\Usuario:       plaintext
-        Symfony\Component\Security\Core\User\User: bcrypt #sha512
+        Symfony\Component\Security\Core\User\User: plaintext  #bcrypt
 
 
 

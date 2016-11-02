@@ -24,6 +24,7 @@
         "symfony/assetic-bundle": "^2.8",
         "components/jquery": "^3.1",
         "twbs/bootstrap": "^3.3",
+        "symfony/assetic-bundle": "2.1.*", 
         "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "require-dev": {
