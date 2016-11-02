@@ -1,18 +1,17 @@
 Prototipo SIARMe  
 ===================================
-Proyecto creado empleando Symfony 2.8 el 5 de Septiembre de 2016, 10:24 pm.
+Desarrollado con Symfony 2.8 - Proyecto creado el 5 de Septiembre de 2016, 10:24 pm.
 
-**SIARMe** es una aplicación de prueba desarrollada para la Direccion Prov. de Reconocimientoos Medicos 
+**SIARMe** es un prototipo o una aplicación de prueba desarrollada para la Direccion Prov. de Reconocimientos Medicos 
 empleando Symfony 2.8. Se trata de un Portotipo de un sistema de Informacion Administrativa para la mencionada Institucion.
-Esta aplicación es la Propuesta en el Trabajo Final de la UNCa -Facultad de Tecnologia (https://siarme-adrianraul.c9users.io/web/app_dev.php) a cargo de Ibañez Raul Adrian
 
+Esta aplicación es la Propuesta en el Trabajo Final para la UNCa -Facultad de Tecnologia (https://siarme-adrianraul.c9users.io/web/app_dev.php) a cargo de Ibañez Raul Adrian.
 
 Si descubres algún error, por favor utiliza [la página de issues de
 Github]( https://github.com/ira-adrian/SIARMe/issues).
 
 Instalando la aplicación
 ------------------------
-
 En el Sitio oficial ( https://symfony.com/ ) puedes encontrar infomacion
 que detallada de cómo instalar bien Symfony.
 
