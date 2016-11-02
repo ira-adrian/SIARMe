@@ -13,7 +13,7 @@ Github]( https://github.com/ira-adrian/SIARMe/issues).
 Instalando la aplicación
 ------------------------
 
-En el libro el Sitio oficial ( https://symfony.com/ ) puedes encontrar infomacion
+En el Sitio oficial ( https://symfony.com/ ) puedes encontrar infomacion
 que detallada de cómo instalar bien Symfony.
 
 Acontinuación sólo se indican los principales pasos necesarios.
