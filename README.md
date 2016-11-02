@@ -88,11 +88,8 @@ solucionar el problema de los permisos de
 Symfony](http://symfony.es/documentacion/como-solucionar-el-problema-de-los-
 permisos-de-symfony2/).
 
-**2. Si ves un error relacionado con la base de datos**, es posible que tu
-instalación de PHP no tenga instalada o activada la extensión para SQLite.
-
-**SIARME** usa por defecto una base de datos como MySQL dn la instalación de la aplicación.
-Si prefieres usar SQLite, sigue estos pasos:
+**2. SIARME** usa por defecto una base de datos MySQL en la instalación de la aplicación.
+Si prefieres usar otra como SQLite, sigue estos pasos:
 
   1. Edita el archivo `app/config/parameters.yml` descomentando todo lo relacionado
      con SQLite y comentando todo lo relacionado con MySQL.
@@ -109,17 +106,6 @@ $ php app/console doctrine:fixtures:load
 # si este último comando da error, ejecuta en su lugar:
 $ php app/console doctrine:fixtures:load --append
 
-```
-Test unitarios y funcionales
-----------------------------
-
-La aplicación incluye varios test unitarios y funcionales de ejemplo. Para
-ejecutarlos debes tener la herramienta
-[PHPUnit](https://github.com/sebastianbergmann/phpunit/) instalada. Después,
-ejecuta el siguiente comando en el directorio raíz del proyecto:
-
-```bash
-$ phpunit -c app
 ```
 
 Frontend
@@ -149,3 +135,15 @@ Backend
   * Credenciales de usuarios:
     * Nombre de usuario: `admin`
     * Contraseña: `1234`
+    
+Test unitarios y funcionales
+----------------------------
+
+La aplicación incluye varios test unitarios y funcionales de ejemplo. Para
+ejecutarlos debes tener la herramienta
+[PHPUnit](https://github.com/sebastianbergmann/phpunit/) instalada. Después,
+ejecuta el siguiente comando en el directorio raíz del proyecto:
+
+```bash
+$ phpunit -c app
+```
