@@ -1,0 +1,52 @@
+{# proyecto/app/Resources/views/expediente/index.html.twig#}
+
+{% extends 'extranet.html.twig' %}
+{% block body %}
+    <div class="container-fluid">
+    <h1>Lista de Expedientes</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tramites</th>
+                <th>Id</th>
+                <th>Letra</th>
+                <th>Numero</th>
+                <th>Año</th>
+                <th>Extracto</th>
+               {# <th>Observacion</th>#}
+                <th>Estado</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for expediente in expedientes %}
+            <tr>
+                <td> {{expediente.tramite | length }} </td>
+                <td><a href="{{ path('backend_expediente_show', { 'id': expediente.id }) }}">{{ expediente.id }}</a></td>
+                <td> {{ expediente.letra }}</td>
+                <td>{{ expediente.numero }}</td>
+                <td>{{ expediente.anio }}</td>
+                <td>{{ expediente.extracto }}</td>
+               {# <td>{{ expediente.observacion }}</td>#}
+                <td>{% if expediente.estado %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a class="btn btn-primary btn-xs" href="{{ path('backend_expediente_show', { 'id': expediente.id }) }}">show</a>
+                            <a class="btn btn-primary btn-xs" href="{{ path('backend_expediente_edit', { 'id': expediente.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_expediente_new') }}">Create a new expediente</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

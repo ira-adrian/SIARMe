@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+</html>
+
+<head>
+     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} Bienvenido...! {% endblock %} | SIARMe </title>
+        
+      {% block stylesheets %}
+        {# Cambio del del Theme por defecto de bootstrap por el theme Cerulean #}
+        {% stylesheets '@bootstrap_cerulean_css' %}
+              <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+      {% endblock %}
+
+        {% block rss %} {% endblock %}         
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+ 
+</head>
+
+<body>          
+  <div class="container-fluid body-container">
+
+    {% block body %} 
+        {% block header %}  {% endblock %}
+        {% block mensaje %} {% endblock %}
+         <div class="row">
+            <div class="col-sm-2">
+              {% block sidebar %}  {% endblock %}
+            </div>
+            <div class="col-sm-10">
+              {% block main %} {% endblock %}
+            </div>
+          </div>
+    {% endblock %}
+
+    <div class="row">
+        {% block footer %}
+          <footer class="footer navbar-fixed-down">
+              <hr />
+              <p class="text-center"> &copy; {{ 'now'|date('Y') }} -  Direccion Provincial de Reconocimientos Médicos </p>
+         </footer>
+        {% endblock %}
+    </div>
+    {% block javascripts %}
+        {% javascripts 
+        '@jquery' 
+        '@bootstrap_js' %}
+
+            <script src="{{ asset_url }}"></script>
+
+        {% endjavascripts %}
+    {% endblock %}
+</div>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+services:
+#    expediente.example:
+#        class: Siarme\ExpedienteBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

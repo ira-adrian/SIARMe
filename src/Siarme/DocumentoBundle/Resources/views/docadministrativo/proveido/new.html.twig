@@ -1,0 +1,16 @@
+{% extends 'DocumentoBundle:docadministrativo:layout_new.html.twig' %}
+
+{% block tipodocumento %} PROVEIDO  {% endblock %}
+{% block formulario %}
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.fechaDocumento, {'label': 'Fecha:'}) }}
+            <div>
+            {{ form_row(form.dirigidoA, {'label': 'Se remiten las presentes actuaciones A:'}) }}
+            {{ form_row(form.texto, {'label': 'Motivo/Razon:'}) }}
+            </div>
+            <div class="text-right">
+                    <input class="btn btn-danger"  type="submit" value="GUARDAR" />
+            </div>
+             {{ form_end(form) }}
+{% endblock %}

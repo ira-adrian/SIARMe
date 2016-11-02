@@ -1,0 +1,21 @@
+{% extends 'DocumentoBundle:docadministrativo:layout_show.html.twig' %}
+
+{% block tipodocumento %} PROVEIDO  {% endblock %}
+{% block cuerpo %}
+        <pclass="text-justify">-----------Remitanse las presentes actuaciones a:  <strong>{{ docAdministrativo.dirigidoA }}.</strong>
+
+         {{ docAdministrativo.texto }}</p> 
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div> <!-- Panel-body-->
+</div>   <!-- Panel-->
+
+</div>
+<div class="col-md-3"></div>
+</div>
+{% endblock %}

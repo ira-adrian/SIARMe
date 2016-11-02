@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Agentes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Apellidonombre</th>
+                <th>Cuil</th>
+                <th>Dni</th>
+                <th>Fechanacimiento</th>
+                <th>Fechaaltalaboral</th>
+                <th>Domicilio</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for agente in agentes %}
+            <tr>
+                <td><a href="{{ path('backend_agente_show', { 'id': agente.id }) }}">{{ agente.id }}</a></td>
+                <td>{{ agente.apellidoNombre }}</td>
+                <td>{{ agente.cuil }}</td>
+                <td>{{ agente.dni }}</td>
+                <td>{% if agente.fechaNacimiento %}{{ agente.fechaNacimiento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if agente.fechaAltaLaboral %}{{ agente.fechaAltaLaboral|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ agente.domicilio }}</td>
+                <td>{{ agente.slug }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('backend_agente_show', { 'id': agente.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('backend_agente_edit', { 'id': agente.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_agente_new') }}">Create a new agente</a>
+        </li>
+    </ul>
+{% endblock %}

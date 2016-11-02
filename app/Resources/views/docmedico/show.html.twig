@@ -1,0 +1,80 @@
+{% extends 'extranet.html.twig' %}
+{% block sidebar %} {% endblock %}
+ {% block mensaje %} {% endblock %}
+{% block main %}
+<div class="row"> 
+<div class="col-md-8">
+    <nav class="navbar  navbar-info  navbar-fixed-bottom">
+            <ul class="list-inline text-right" >
+                <li>
+                    <a class="btn btn-info btn-sm" role="button" href="{{ path('backend_docmedico_edit', { 'id': docMedico.id }) }}"> <span class="glyphicon glyphicon-pencil"> </span>Editar</a>
+                </li>
+                <li>
+                    <a class="btn btn-danger btn-sm" role="button" href="{{ path('backend_docmedico_edit', { 'id': docMedico.id }) }}"> <span class="glyphicon glyphicon-trash"> </span> Eliminar</a>
+                </li>
+                <li>
+                    <a class="btn btn-info btn-sm" role="button" href="{{ path('backend_docmedico_edit', { 'id': docMedico.id }) }}">  <span class="glyphicon glyphicon-print"> </span> Imprimir </a>
+                </li>
+                <li></li>
+                <li></li>
+            </ul>   
+    </nav><!-- /.navbar-menu -->
+
+    <div class="panel panel-default">
+    <div class="panel-heading text-center">  
+        <small>Poder Ejecutivo <br>
+            Secretaria General De La Gobernacion<br>
+            Subsecretaria  De Recursos Humanos Gestion y Pública<br>
+            DIRECCION PROVINCIAL SERVICIO DE RECONOCIMIENTO 
+        </small>
+    </div>
+    <div class="panel-body">
+        <p class="text-center lead">ACTA DE JUNTA MÉDICA      N°: {{ docMedico.numero }}</p>
+
+        <p class="text-uppercase"> <strong>
+        Referencia: {{docMedico.tramite.expediente}}<br>
+        Iniciador: {{docMedico.licencia.agente}}  <br>
+        Extracto: {{docMedico.tramite.expediente.extracto | upper}} <br>
+        </strong>
+        </p> 
+        <p class="text-justify">En la ciudad de San Fernando Del Valle  de Catamarca, <strong>{% if docMedico.fechaDocumento %}{{ docMedico.fechaDocumento|date('l, j  F  Y') |replace({
+            'January'  : 'Enero',
+            'February' : 'Febrero',
+            'March' : 'Marzo',
+            'April' : 'Abril',
+            'May' : 'Mayo',
+            'June' : 'Junio',
+            'July' : 'Julio',
+            'August' : 'Agosto',
+            'September' : 'Septiembre',
+            'October' : 'Octubre',
+            'November' : 'Nombiembre',
+            'December' : 'Diciembre',
+            'Monday'   : 'Lunes',
+            'Tuesday'   : 'Martes',
+            'Wednesday'   : 'Miércoles',
+            'Thursday'   : 'Jueves',
+            'Friday'   : 'Viernes',
+            'Sunday'   : 'Domingo'
+        }) }}  {% endif %} </strong> , LA  JUNTA  MÉDICA  DE MEDICINA LABORAL  de  la  Dirección  de  Reconocimiento Médicos, procede a examinar al Sr./a. <strong>{{ docMedico.licencia.agente }}</strong> y habiendo analizado los antecedentes de caso, efectuado el  examen  correspondiente,  evaluado  su  pronóstico  y  evolución   ha dictaminado:  <br>
+        <p> </p>
+         <em><strong>{{ docMedico.dictamen }}</strong>  </em> 
+        </p>
+        <hr>
+        <p> Feccha Desde:   <strong>{% if docMedico.licencia.fechadesde %}{{ docMedico.licencia.fechadesde |date('d-m-Y') }} {% endif %}</strong>                -           Fecha Hasta:   <strong>{% if docMedico.licencia.fechahasta %}{{ docMedico.licencia.fechahasta |date('d-m-Y') }} {% endif %} </strong></p>
+        <p>Diagnostico: <strong>{{docMedico.licencia.diagnostico}}  </strong> </p>
+        <p>Diagnostico Codificado:<strong> {{docMedico.licencia.enfermedad}}  </strong> </p>
+        <p>Naturaleza de la Incapacidad: Inculpable
+            <ul>
+                <li>Grado de Incapacidad: <strong> 0 % </strong></li>
+                <li>Incapacidad: <strong> - </strong></li>
+            </ul>
+        </p> 
+           <p></p>                
+    </div>
+    </div>
+    </div> <!--col-md.8-->
+    <div class="col-md-2"></div>
+</div><!--row-->
+
+{% endblock %}

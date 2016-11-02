@@ -1,0 +1,40 @@
+{% extends 'extranet.html.twig' %}
+
+{% block sidebar %} {% endblock %}
+
+{% block main %} 
+    <div class="col-md-10">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+             <p> <h4>Detalle de Expediente </h4></p>
+            <table>
+                <tbody class="h5">
+                    <tr class="hidden">
+                        <th>Id</th>
+                        <td>{{ expediente.id }}</td>
+                    </tr>
+                    <tr class="h3 text-info">
+                        <th>Expediente: </th>
+                        <td>{{ expediente }}</td>
+                    </tr>
+                    <tr>
+                        <th>Extracto: </th>
+                        <td>{{ expediente.extracto }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-body">
+            <h4 class="text-center">Iniciar Nuevo Tramite</h4>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+            <div class="text-right">
+                <input class="btn btn-danger" type="submit" value="Guardar" />
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

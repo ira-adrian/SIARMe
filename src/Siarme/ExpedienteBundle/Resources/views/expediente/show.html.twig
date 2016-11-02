@@ -1,0 +1,63 @@
+{# Siarme/ExpedienteBundle/Resources/views/expediente/show.html.twig#}
+
+{% extends 'extranet.html.twig' %}
+{% block sidebar %}
+{% endblock %}
+{% block main %}
+
+     <nav class="navbar  navbar-info  navbar-fixed">
+        <ul class="list-inline" >
+            <li>
+                <a class="btn btn-info btn-sm" href="{{ path('extranet') }}">Volver a Expedientes</a>
+            </li>
+            
+            <li>
+                <a class="btn btn-info btn-sm" href="{{ path('backend_expediente_edit', { 'id': expediente.id }) }}">Editar</a>
+            </li>
+            <li>
+                {% if (expediente.tramite | length ) < 1 %}
+                {{ form_start(delete_form) }}
+                    <input class="btn btn-danger btn-sm" type="submit" value="Eliminar">
+                {{ form_end(delete_form) }}
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+<div class="col-md-10">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+             <h4>Detalle de Expediente</h4>
+        </div>
+        <div class="panel-body">
+            <table>
+                <tbody>
+                    <tr class="hidden">
+                        <th>Id</th>
+                        <td>{{ expediente.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Expediente: </th>
+                        <td>{{ expediente }}</td>
+                    </tr>
+                    <tr> <td><hr></td></tr>
+                    <tr>
+                        <th>Extracto: </th>
+                        <td>{{ expediente.extracto }}</td>
+                    </tr>
+                    <tr> <td> <hr></td></tr>
+                    <tr >
+                        <th>Observacion: </th>
+                        <td> {{ expediente.observacion }}</td>
+                    </tr>
+                    <tr> <td> <hr></td></tr>
+                    <tr>
+                        <th>Estado: </th>
+                        <td>{% if expediente.estado %}Concluido{% else %}Iniciado{% endif %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

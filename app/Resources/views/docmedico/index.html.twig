@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Docmedicos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechadocumento</th>
+                <th>Numero</th>
+                <th>Dictamen</th>
+                <th>Fechacreacion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for docMedico in docMedicos %}
+            <tr>
+                <td><a href="{{ path('backend_docmedico_show', { 'id': docMedico.id }) }}">{{ docMedico.id }}</a></td>
+                <td>{% if docMedico.fechaDocumento %}{{ docMedico.fechaDocumento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ docMedico.numero }}</td>
+                <td>{{ docMedico.dictamen }}</td>
+                <td>{% if docMedico.fechaCreacion %}{{ docMedico.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('backend_docmedico_show', { 'id': docMedico.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('backend_docmedico_edit', { 'id': docMedico.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_docmedico_new') }}">Create a new docMedico</a>
+        </li>
+    </ul>
+{% endblock %}

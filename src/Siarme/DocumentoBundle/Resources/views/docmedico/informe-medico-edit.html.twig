@@ -1,0 +1,21 @@
+{% extends 'DocumentoBundle:docmedico:layout_new.html.twig' %}
+
+{% block tipodocumento %} INFORME MEDICO {% endblock %}
+{% block formulario %}
+    {{ form_start(edit_form) }}
+         {{ form_errors(edit_form) }}
+        {{ form_row(edit_form.fechaDocumento, {'label': 'Fecha:'}) }}
+
+        {{ form_row(edit_form.dictamen, {'label': 'Dictamen Medico:'}) }}
+        {{ form_row(edit_form.Licencia.fechaDesde, {'label': 'Fecha A.T. o E.P.:'}) }}
+        {{ form_row(edit_form.Licencia.fechaHasta, {'label': 'Fecha de Alta:'}) }}
+        {{ form_row(edit_form.Licencia.enfermedad, {'label': 'Codigo Enf.:'}) }}
+        {{ form_row(edit_form.Licencia.articulo, {'label': 'Articulo:'}) }}
+        {{ form_row(edit_form.Licencia.diagnostico, {'label': 'Prestaciones a seguir brindando  (Prótesis, ortesis, etc.):'}) }}
+         {{ form_rest(edit_form) }}
+
+        <div class="text-right">
+                <input class="btn btn-danger"  type="submit" value="Guardar" />
+        </div>
+    {{ form_end(edit_form) }}
+{% endblock %}

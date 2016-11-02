@@ -1,0 +1,87 @@
+{% extends 'extranet.html.twig' %}
+{% block sidebar %} {% endblock%}
+{% block main %}
+  <div class="row"> 
+        <div class="col-md-8">
+    <h1>Docadministrativo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ docAdministrativo.id }}</td>
+            </tr>
+            <tr>
+                <th>Fechadocumento</th>
+                <td>{% if docAdministrativo.fechaDocumento %}{{ docAdministrativo.fechaDocumento|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Dirigidoa</th>
+                <td>{{ docAdministrativo.dirigidoA }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ docAdministrativo.numero }}</td>
+            </tr>
+            <tr>
+                <th>Texto</th>
+                <td>{{ docAdministrativo.texto }}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{% if docAdministrativo.fechaCreacion %}{{ docAdministrativo.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="panel panel-default">
+  <div class="panel-heading text-center"> <p> <small>Poder Ejecutivo <br>
+Secretaria General De La Gobernacion<br>
+Subsecretaria  De Recursos Humanos Gestion Públic<br>
+DIRECCION PROVINCIAL SERVICIO DE RECONOCIMIENTO </small></p>
+</div>
+  <div class="panel-body">
+    <p class="text-center">ACTA DE JUNTA MÉDICA      N°: {{ docAdministrativo.numero }}</p>
+
+
+<p>
+Referencia:   -  - <br>
+Iniciador: <br>
+Extracto: <br>
+</p>
+
+ 
+<p class="text-justify">En la ciudad de San Fernando Del Valle  de Catamarca, {% if docAdministrativo.fechaDocumento %}{{ docAdministrativo.fechaDocumento|date('l, j  F  Y') }} {% endif %}, LA  JUNTA  MÉDICA  DE MEDICINA LABORAL  de  la  Dirección  de  Reconocimiento Médicos, procede a examinar al Sr./a.   y habiendo analizado los antecedentes de caso, efectuado el  examen  correspondiente,  evaluado  su  pronóstico  y  evolución   ha dictaminado:  </p>
+
+<p> </p>
+Desde:     …………………    Hasta:   ………………………..
+Diagnostico:  (MANUAL) según baremo de enfermedades de la institucion
+Diagnostico Codificado: (MANUAL)  según baremo de enfermedades de la institucion
+Naturaleza de la Incapacidad:              
+Grado de Incapacidad:  ………………………………………………………….
+
+                Incapacidad:    
+  </div>
+</div>
+
+
+
+                     
+
+    <ul>
+        <li>
+            <a href="{{ path('extranet_docadministrativo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('extranet_docadministrativo_edit', { 'id': docAdministrativo.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+</div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}

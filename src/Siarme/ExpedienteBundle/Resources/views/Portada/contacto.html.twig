@@ -1,0 +1,72 @@
+{% extends 'frontend.html.twig' %}
+
+
+{% block title 'Contacto	' %}
+
+{% block body %}
+  
+  {{ parent() }}
+ <div class="container-fluid bg-grey">
+  <h2 class="text-center">CONTACTENOS</h2>
+  <div class="row">
+    <div class="col-md-4" style="font-size:15px">
+      <p><span class= "glyphicon glyphicon-map-marker"></span> San Fernando del Valle de Catamarca</p>
+      <p><span class="glyphicon glyphicon-pushpin">  </span> Dirección: Ayacucho 586</p>
+      <p><span class='glyphicon glyphicon-phone'></span> Teléfono: 0383- 4437758</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> dirrecmedico@catamarca.gov.ar</p>  
+      <p> <span class="glyphicon glyphicon-time"></span> Contactenos en el Horario de 8:00 a 12:00 y de 16:00 a 20:00.</p>
+    </div>
+    <hr>
+    <div class="col-md-6">
+      <div class="row">
+        <form action="">
+        <div class="col-md-5 form-group">
+          <input class="form-control" id="name" name="name" placeholder="Nombre" type="text" required/>
+        </div>
+        <div class="col-md-5 form-group">
+          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required/>
+        </div>
+      </div>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Comentario" rows="5"></textarea><br>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <button class="md btn-primary pull-right" type="submit">Enviar</button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<span> <p><<hr></p></span>
+ <!-- Set height and width with CSS -->
+<div id="googleMap" style="height:400px;width:90%;"></div>
+
+<!-- Add Google Maps -->
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+var myCenter = new google.maps.LatLng(-28.468544, -65.784147);
+
+function initialize() {
+var mapProp = {
+center:myCenter,
+zoom:16,
+scrollwheel:false,
+draggable:false,
+mapTypeId:google.maps.MapTypeId.ROADMAP
+};
+
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+var marker = new google.maps.Marker({
+position:myCenter,
+});
+
+marker.setMap(map);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+{% endblock %}

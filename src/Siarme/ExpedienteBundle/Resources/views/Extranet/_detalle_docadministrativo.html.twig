@@ -1,0 +1,15 @@
+<div class="col-md-2 text-center">
+		{% set path = tipodoc.administrativo[docAdministrativo.slug]["show"] %}
+        <h3>  <a  
+     {% if not is_granted('ROLE_USUARIO') %}
+        	href="{{ path(path , { 'id': docAdministrativo.id }) }}"
+		{% endif %}
+
+        	> <span class="glyphicon glyphicon glyphicon-file"></span></a></h3>
+        <small>
+        <strong>{{ docAdministrativo }}<br>
+        N°: {{ docAdministrativo.numero }}</strong><br>
+        {% if docAdministrativo.fechaDocumento %}{{ docAdministrativo.fechaDocumento|date('d-m-Y') }}{% endif %}<br>        
+        </small>
+        
+</div>

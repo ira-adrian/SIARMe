@@ -1,0 +1,62 @@
+{% extends 'extranet.html.twig' %}
+
+{% block sidebar %} {% endblock %}
+{% block main %}
+
+
+    <nav class="navbar  navbar-info  navbar-fixed">
+        <ul class="list-inline" >
+            <li>
+                <a class="btn btn-info btn-sm" href="{{ path('extranet') }}">Volver a Expedientes</a>
+            </li>            
+            <li>
+                <a class="btn btn-info btn-sm" href="{{ path('extranet_usuario_edit', { 'id': app.user.id }) }}">Editar</a>
+            </li>
+        </ul>
+    </nav>
+
+<div class="col-md-10">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+             <p class="h4">Mis Datos Personales</p>
+        </div>
+        <div class="panel-body">
+                <table>
+                    <tbody class="h4">
+                        <tr class="hidden">
+                            <th >Id</th>
+                            <td>{{ usuario.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Apellido y Nombre: </th>
+                            <td>{{ usuario.apellidoNombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Usuario: </th>
+                            <td>{{ usuario.usuario }}</td>
+                        </tr>
+                        <tr>
+                            <th>Direccion: </th>
+                            <td>{{ usuario.direccion }}</td>
+                        </tr>
+                        <tr>
+                            <th>DNI: </th>
+                            <td>{{ usuario.dni }}</td>
+                        </tr>
+                        <tr>
+                            <th>Telefono: </th>
+                            <td>{{ usuario.telefono }}</td>
+                        </tr>
+                        <tr>
+                            <th>Telefono movil: </th>
+                            <td>{{ usuario.telefonoMovil }}</td>
+                        </tr>  
+
+                    </tbody>
+                </table>
+
+
+            </div>
+    </div>
+</div>
+{% endblock %}

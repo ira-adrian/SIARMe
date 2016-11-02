@@ -1,0 +1,82 @@
+{% extends 'extranet.html.twig' %}
+{% block sidebar %}{% endblock %}
+{% block main %}
+<div class="col-md-10">
+    <nav class="navbar  navbar-info">
+        <ul class="list-inline" >
+            <li>
+                <a class="btn btn-info btn-sm" href="{{ path('extranet') }}">Volver a Expedientes</a>
+            </li>            
+            <li>
+                <a class="btn btn-info btn-sm" href="{{ path('backend_tramite_edit', { 'id': tramite.id }) }}">Editar</a>
+            </li>
+            <li>
+                {% if ((tramite.docmedico | length ) + (tramite.docadministrativo | length  ) + (tramite.turnoCitacion | length)  < 1) %}
+                {{ form_start(delete_form) }}
+                    <input class="btn btn-danger btn-sm" type="submit" value="Eliminar">
+                {{ form_end(delete_form) }}
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+            <h4> Detalle de Tramite</h4>
+            <table>
+                <tbody class="h5">
+                    <tr class="hidden">
+                        <th>Id</th>
+                        <td>{{ tramite.expediente.id }}</td>
+                    </tr>
+                    <tr class="h3 text-info">
+                        <th>Expediente: </th>
+                        <td>{{ tramite.expediente }}</td>
+                    </tr>
+                    <tr>
+                        <th>Extracto: </th>
+                        <td>{{ tramite.expediente.extracto }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-body">
+            <table>
+                <tbody>
+                    <tr class="hidden">
+                        <th>Id</th>
+                        <td>{{ tramite.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tramite:</th>
+                        <td>{{ tramite.tipotramite }}</td>
+                    </tr>
+                    <tr> <td><hr></td></tr>
+                    <tr>
+                        <th>Organismo de Origen:</th>
+                        <td>{{ tramite.organismoOrigen }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de Ingreso:</th>
+                        <td>{% if tramite.fechaOrigen %}{{ tramite.fechaOrigen|date('Y-m-d') }}{% endif %}</td>
+                    </tr>
+                    <tr> <td><hr></td></tr>
+                    <tr>
+                        <th>Organismo de Destino:</th>
+                        <td>{{ tramite.organismoDestino }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de Entrega:</th>
+                        <td>{% if tramite.fechaDestino %}{{ tramite.fechaDestino|date('Y-m-d') }}{% endif %}</td>
+                    </tr>
+                    <tr> <td><hr></td></tr>
+                    <tr>
+                        <th>Estado:</th>
+                        <td>{% if tramite.estado %}Concluido{% else %}Transito{% endif %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+ 
+{% endblock %}

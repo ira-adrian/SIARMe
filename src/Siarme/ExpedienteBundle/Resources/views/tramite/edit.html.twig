@@ -1,0 +1,47 @@
+{% extends 'extranet.html.twig' %}
+
+{% block sidebar %} {% endblock %}
+
+{% block main %}
+<div class="col-md-10">
+         <nav class="navbar  navbar-info  navbar-fixed">
+            <ul class="list-inline">
+                <li>
+                    <a class="btn btn-info btn-sm" href="{{ path('extranet') }}">Volver a Expedientes</a>
+                </li>
+            </ul>
+         </nav>
+
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+             <h4>Editar Tramite</h4>
+
+            <table>
+                <tbody class="h5">
+                    <tr class="hidden">
+                        <th>Id</th>
+                        <td>{{ tramite.expediente.id }}</td>
+                    </tr>
+                    <tr class="h3 text-info">
+                        <th>Expediente: </th>
+                        <td>{{ tramite.expediente }}</td>
+                    </tr>
+                    <tr>
+                        <th>Extracto: </th>
+                        <td>{{ tramite.expediente.extracto }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-body">
+            {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <div class="text-right">
+                <input class="btn btn-danger btn-sm" type="submit" value="Guardar" />
+                </div>
+            {{ form_end(edit_form) }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

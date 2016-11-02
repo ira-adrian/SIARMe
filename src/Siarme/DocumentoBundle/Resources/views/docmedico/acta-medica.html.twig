@@ -1,0 +1,27 @@
+{% extends 'DocumentoBundle:docmedico:layout_show.html.twig' %}
+
+{% block tipodocumento %} INFORME MEDICO {% endblock %}
+{% block cuerpo %}
+    <p  class="text-justify">
+        </strong> --------- LA  JUNTA  MÉDICA  DE MEDICINA LABORAL  de  la  Dirección  de  Reconocimiento Médicos, procede a examinar al Sr./a. <strong>{{ docMedico.licencia.agente }}</strong> y habiendo analizado los antecedentes de caso, efectuado el  examen  correspondiente,  evaluado  su  pronóstico  y  evolución   ha dictaminado: 
+    </p>
+    <br>
+    <p  class="text-justify">
+        <em><strong>---------{{ docMedico.dictamen }}</strong>  </em> 
+    </p>
+    <hr>
+    <p> 
+        Feccha Desde:   <strong>{% if docMedico.licencia.fechadesde %}{{ docMedico.licencia.fechadesde |date('d-m-Y') }} {% endif %}</strong>                -           Fecha Hasta:   <strong>{% if docMedico.licencia.fechahasta %}{{ docMedico.licencia.fechahasta |date('d-m-Y') }} {% endif %} </strong>
+    </p>
+    <p>
+        Diagnostico: <strong>{{docMedico.licencia.diagnostico}}  </strong> 
+    </p>
+    <p>
+        Diagnostico Codificado:<strong> {{docMedico.licencia.enfermedad}}  </strong> 
+    </p>
+
+    <br> 
+    <br>
+    <br>
+    <br>         
+{% endblock %}

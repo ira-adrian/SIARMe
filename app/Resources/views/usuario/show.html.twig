@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Usuario</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ usuario.id }}</td>
+            </tr>
+            <tr>
+                <th>Apellidonombre</th>
+                <td>{{ usuario.apellidoNombre }}</td>
+            </tr>
+            <tr>
+                <th>Usuario</th>
+                <td>{{ usuario.usuario }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ usuario.password }}</td>
+            </tr>
+            <tr>
+                <th>Salt</th>
+                <td>{{ usuario.salt }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ usuario.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Dni</th>
+                <td>{{ usuario.dni }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ usuario.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Telefonomovil</th>
+                <td>{{ usuario.telefonoMovil }}</td>
+            </tr>
+            <tr>
+                <th>Rol</th>
+                <td>{{ usuario.rol }}</td>
+            </tr>
+            <tr>
+                <th>Esactivo</th>
+                <td>{% if usuario.esActivo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechacrea</th>
+                <td>{% if usuario.fechaCrea %}{{ usuario.fechaCrea|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechamodifica</th>
+                <td>{% if usuario.fechaModifica %}{{ usuario.fechaModifica|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_usuario_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('backend_usuario_edit', { 'id': usuario.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

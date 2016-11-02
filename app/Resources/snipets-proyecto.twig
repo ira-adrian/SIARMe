@@ -1,0 +1,84 @@
+{% block mensaje %}
+  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<div class="row">
+<div class="col-md-2"> </div>
+<div class="col-md-8">
+  <div class="alert alert-dismissible alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times; </button>
+
+      <div class="flash-notice">
+      <p>Nombre de Usuario: {{ app.user.username }}</p>
+     {{ app.user }}
+           </div>
+      </div>
+</div>
+  {% endif %}
+
+  {% endblock %}
+
+
+
+
+<td colspan="6">
+                    <p  class="bg-primary">  DEPARTAMENTO {{tramite.departamentoRm.departamentoRm | upper}}</p>
+                    <p> <strong>Estado: </strong> {% if tramite.estado is same as(false) %}
+                                            Tramite CONCLUIDO
+                                        {% endif %}
+                                        {% if tramite.estado is same as(true) %}
+                                            Tramite INICIADO
+                                        {% endif %}
+                    </p>
+                    <p><strong>Tramite: </strong>{{tramite.tipoTramite.tipoTramite}}</p>
+                    <p><strong>
+                        Fecha de Ingreso: </strong>{{tramite.fechaOrigen | date("m/d/Y")}}<strong> - Lugar de Origen: </strong>{{tramite.organismoOrigen}}</p>
+                   <p><strong> Fecha de Salida: </strong>{{tramite.fechaOrigen | date()}}  <strong> -  Lugar  de Destino:</strong>{{tramite.organismoDestino}}</p> 
+
+  </td>
+
+        $em = $this->getEntityManager();
+
+        $clasificaciones = $em->getRepository('ExpedienteBundle:Clasificacion')->findAll();
+        $departamentos = $em->getRepository('AusentismoBundle:DepartamentoRm')->findAll();
+
+        $menu = array();
+
+        foreach ($departamentos as $departamento) {
+
+        $consulta = $em->createQuery('
+            SELECT e, t
+            FROM ExpedienteBundle:Expediente e JOIN e.tramite t
+            WHERE t.departamentoRm = :id
+        ')->setParameter('id', $departamentoRm);             
+
+        foreach ($clasificaciones as $clasificacion ) {
+
+            $menu[$departamento] = count($consulta->getResult());
+            
+
+          }
+        
+        }
+
+        $consulta = $em->createQuery('
+            SELECT e, t
+            FROM ExpedienteBundle:Expediente e JOIN e.tramite t
+            WHERE t.departamentoRm = :id
+        ');
+        $consulta->setParameter('id', $departamentoRm);
+
+        return $consulta->getResult();
+    }
+
+               foreach ($clasificaciones as $clasificacion ) {
+            foreach  ( $expedientes as $expediente) {
+
+               if ($expediente->getClasificacion == $clasificacion->getClasificacion()) {
+                    $menu[$clasificacion->getClasificacion()] = 1;
+                }
+            }
+         }
+
+        $menu_principal[$departamento->getDepartamentoRm()]= $menu;
+            
+        }
+        return $menu_principal;

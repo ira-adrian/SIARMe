@@ -1,0 +1,262 @@
+<?php
+
+namespace Siarme\DocumentoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * DocMedico
+ *
+ * @ORM\Table(name="doc_medico")
+ * @ORM\Entity(repositoryClass="Siarme\DocumentoBundle\Repository\DocMedicoRepository")
+ */
+class DocMedico
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo_documento", type="string", length=255)
+     */
+    private $tipoDocumento;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_documento", type="datetime")
+     */
+    private $fechaDocumento;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="numero", type="integer")
+     */
+    private $numero;
+
+    /** 
+     * @ORM\ManyToOne(targetEntity="Siarme\UsuarioBundle\Entity\Usuario", inversedBy="docMedico") 
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     */
+    private $usuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dictamen", type="text")
+     */
+    private $dictamen;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_creacion", type="datetime")
+     */
+    private $fechaCreacion;
+
+    /** 
+     * @ORM\ManyToOne(targetEntity="Siarme\ExpedienteBundle\Entity\Tramite", inversedBy="docMedico") 
+     * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
+     */
+    private $tramite;
+
+    /** 
+     * @ORM\OneToOne(targetEntity="Siarme\AusentismoBundle\Entity\Licencia", mappedBy="docMedico") 
+     * 
+     */
+    private $licencia;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+   
+
+    /**
+     * Set numero
+     *
+     * @param integer $numero
+     * @return DocMedico
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return integer 
+     */
+    public function getNumero()
+    {
+        return $this->numero;
+    }
+
+   
+    /**
+     * Set dictamen
+     *
+     * @param string $dictamen
+     * @return DocMedico
+     */
+    public function setDictamen($dictamen)
+    {
+        $this->dictamen = $dictamen;
+
+        return $this;
+    }
+
+    /**
+     * Get dictamen
+     *
+     * @return string 
+     */
+    public function getDictamen()
+    {
+        return $this->dictamen;
+    }
+
+
+
+    
+    public function __construct()
+    {
+        $this->fechaCreacion = new \DateTime();
+    }
+
+  
+
+    /**
+     * Set tramite
+     *
+     * @param \Siarme\ExpedienteBundle\Entity\Tramite $tramite
+     * @return DocMedico
+     */
+    public function setTramite(\Siarme\ExpedienteBundle\Entity\Tramite $tramite = null)
+    {
+        $this->tramite = $tramite;
+
+        return $this;
+    }
+
+    /**
+     * Get tramite
+     *
+     * @return \Siarme\ExpedienteBundle\Entity\Tramite 
+     */
+    public function getTramite()
+    {
+        return $this->tramite;
+    }
+
+
+
+    /**
+     * Set usuario
+     *
+     * @param \Siarme\UsuarioBundle\Entity\Usuario $usuario
+     * @return DocMedico
+     */
+    public function setUsuario(\Siarme\UsuarioBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \Siarme\UsuarioBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+
+    /**
+     * Set licencia
+     *
+     * @param \Siarme\AusentismoBundle\Entity\Licencia $licencia
+     * @return DocMedico
+     */
+    public function setLicencia(\Siarme\AusentismoBundle\Entity\Licencia $licencia = null)
+    {
+        $this->licencia = $licencia;
+
+        return $this;
+    }
+
+    /**
+     * Get licencia
+     *
+     * @return \Siarme\AusentismoBundle\Entity\Licencia 
+     */
+    public function getLicencia()
+    {
+        return $this->licencia;
+    }
+
+    /**
+     * Set fechaDocumento
+     *
+     * @param \DateTime $fechaDocumento
+     * @return DocMedico
+     */
+    public function setFechaDocumento($fechaDocumento)
+    {
+        $this->fechaDocumento = $fechaDocumento;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaDocumento
+     *
+     * @return \DateTime 
+     */
+    public function getFechaDocumento()
+    {
+        return $this->fechaDocumento;
+    }
+
+    /**
+     * Set fechaCreacion
+     *
+     * @param \DateTime $fechaCreacion
+     * @return DocMedico
+     */
+    public function setFechaCreacion($fechaCreacion)
+    {
+        $this->fechaCreacion = $fechaCreacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaCreacion
+     *
+     * @return \DateTime 
+     */
+    public function getFechaCreacion()
+    {
+        return $this->fechaCreacion;
+    }
+}

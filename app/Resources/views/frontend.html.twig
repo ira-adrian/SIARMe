@@ -1,0 +1,73 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+{% block header %}
+<header>
+  <nav class="navbar navbar-default"  role = "navigation">
+  <div class="container-fluid">
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Desplegar Navegacion</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand"><span class="glyphicon glyphicon-plus-sign text-default"></span>  SIARMe</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{{ path ('portada_estatica')}}"> Inicio <span class="sr-only">(current)</span></a></li>
+
+       {# <li><a href="{{ path ('portada_estatica', {'pagina': 'ayuda'})}}">Ayuda</a></li>#}
+        <li><a href="{{ path ('portada_estatica', {'pagina': 'contacto'})}}">Contacto</a></li>
+      </ul>
+
+      <form class="navbar-form navbar-left" method="get" action="" role="search">
+        <div class="form-group">
+          <input name="consulta" value="{{ app.request.get('consulta') }}" type="text" class="form-control" placeholder="Buscar Expte.: Num.-Año" required />
+        </div>
+        <button type="submit" class="btn btn-default" >Buscar</button>
+      </form>   
+
+
+      <ul class="nav navbar-nav navbar-right">           
+        <li>
+            <a href="{{ path ('extranet')}}">
+              <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> 
+              Ingresar
+            </a>            
+        </li>        
+      </ul> 
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+</header>
+{% endblock %}
+
+
+
+{% for flashMessage in app.session.flashbag.get('mensaje-warning') %}
+<div class="alert alert-dismissible alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+    <div class="flash-notice">
+        {{ flashMessage | raw }}
+    </div>
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('mensaje-info') %}
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+    <div class="flash-notice">
+        {{ flashMessage | raw }}
+    </div>
+    </div>
+{% endfor %}
+
+{% endblock %}
+

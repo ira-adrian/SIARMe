@@ -1,0 +1,40 @@
+{% extends 'DocumentoBundle:docmedico:layout_show.html.twig' %}
+
+{% block tipodocumento %} INFORME MEDICO {% endblock %}
+{% block cuerpo %}
+        <p  class="text-justify">
+            <strong>VISTO: </strong> <br> 
+            El Expediente {{docMedico.tramite.expediente}} Caratulado como
+            Extracto: {{docMedico.tramite.expediente.extracto | upper}}
+        </p> 
+
+        <p class="text-justify"><strong>CONSIDERANDO:</strong> <br>
+             Los elementos de juicio presentados en los autos de referencia, y teniendo en cuenta la valoración 
+            Clínica del examinado en el día de la fecha, esta  Junta  Medica, dependiente de la Dirección de Inspección Laboral:
+        </p>
+
+        <p class="text-center"> <strong>DICTAMINA:</strong></p>
+
+        <p class="text-justify"><strong>PRIMERO:</strong> <br>
+            Que la patología denunciada por el/la  Sr/a: {{docMedico.licencia.agente}} D.N.I. N°: {{docMedico.licencia.agente.dni}} Edad:{{docMedico.licencia.agente.fechaNacimiento | age }} ,  Antigüedad:{{docMedico.licencia.agente.fechaAltaLaboral | age }} , Lugar de Trab: {% for cargo in docMedico.licencia.agente.cargo %} {{ cargo.organismo}} - {% endfor %} es: <em><strong> {{docMedico.licencia.articulo.descripcion}} </strong></em>
+        </p>
+
+        <p class="text-justify"><strong>SEGUNDO:</strong> <br>
+
+            <strong>Datos Asistenciales: </strong> <br>
+            Fecha de A.T .o E.P.: {{docMedico.licencia.fechaDesde | date('d-m-Y') }} ---  Fecha de Ingreso: {{docMedico.licencia.fechaDocumento | date('d-m-Y') }}  <br>
+
+            <strong>Evaluacion:</strong> <br>
+            <p class="text-justify">
+            <em><strong>{{ docMedico.dictamen }}</strong> </em> 
+            </p>
+        </p>
+
+        <hr>
+        <p>Diagnostico Codificado:<strong> {{docMedico.licencia.enfermedad.codigoEnfermedad}}  </strong> </p>
+        <p>
+            Prestaciones en especie a seguir brindando (Prótesis, ortesis, etc.); {{ docMedico.licencia.diagnostico }}
+        </p> 
+                FECHA DE ALTA MÉDICA:   {{docMedico.licencia.fechaHasta | date('d-m-Y') }} 
+           <p></p>                
+{% endblock %}

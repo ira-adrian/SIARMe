@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Usuarios list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Apellidonombre</th>
+                <th>Usuario</th>
+                <th>Password</th>
+                <th>Salt</th>
+                <th>Direccion</th>
+                <th>Dni</th>
+                <th>Telefono</th>
+                <th>Telefonomovil</th>
+                <th>Rol</th>
+                <th>Esactivo</th>
+                <th>Fechacrea</th>
+                <th>Fechamodifica</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td><a href="{{ path('backend_usuario_show', { 'id': usuario.id }) }}">{{ usuario.id }}</a></td>
+                <td>{{ usuario.apellidoNombre }}</td>
+                <td>{{ usuario.usuario }}</td>
+                <td>{{ usuario.password }}</td>
+                <td>{{ usuario.salt }}</td>
+                <td>{{ usuario.direccion }}</td>
+                <td>{{ usuario.dni }}</td>
+                <td>{{ usuario.telefono }}</td>
+                <td>{{ usuario.telefonoMovil }}</td>
+                <td>{{ usuario.rol }}</td>
+                <td>{% if usuario.esActivo %}Yes{% else %}No{% endif %}</td>
+                <td>{% if usuario.fechaCrea %}{{ usuario.fechaCrea|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if usuario.fechaModifica %}{{ usuario.fechaModifica|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('backend_usuario_show', { 'id': usuario.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('backend_usuario_edit', { 'id': usuario.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_usuario_new') }}">Create a new usuario</a>
+        </li>
+    </ul>
+{% endblock %}

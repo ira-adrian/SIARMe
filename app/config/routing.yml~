@@ -1,0 +1,28 @@
+ausentismo:
+    resource: "@AusentismoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+usuario:
+    resource: "@UsuarioBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+expediente:
+    resource: "@ExpedienteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+documento:
+    resource: "@DocumentoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+agente:
+    resource: "@AgenteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

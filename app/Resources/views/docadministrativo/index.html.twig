@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Docadministrativos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechadocumento</th>
+                <th>Dirigidoa</th>
+                <th>Numero</th>
+                <th>Texto</th>
+                <th>Fechacreacion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for docAdministrativo in docAdministrativos %}
+            <tr>
+                <td><a href="{{ path('extranet_docadministrativo_show', { 'id': docAdministrativo.id }) }}">{{ docAdministrativo.id }}</a></td>
+                <td>{% if docAdministrativo.fechaDocumento %}{{ docAdministrativo.fechaDocumento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ docAdministrativo.dirigidoA }}</td>
+                <td>{{ docAdministrativo.numero }}</td>
+                <td>{{ docAdministrativo.texto }}</td>
+                <td>{% if docAdministrativo.fechaCreacion %}{{ docAdministrativo.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('extranet_docadministrativo_show', { 'id': docAdministrativo.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('extranet_docadministrativo_edit', { 'id': docAdministrativo.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('extranet_docadministrativo_new') }}">Create a new docAdministrativo</a>
+        </li>
+    </ul>
+{% endblock %}

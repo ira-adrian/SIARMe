@@ -1,0 +1,43 @@
+{% extends 'extranet.html.twig' %}
+
+{% block sidebar %} {% endblock %}
+    
+{% block main %}
+<div class="col-sm-offset col-sm-8">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+             <h4>{% block tipodocumento %}  Informe Medico {% endblock %}</h4>        
+
+        <p class="text-uppercase text-left"> 
+        <strong>Referencia: </strong>{{docMedico.tramite.expediente}} - Extracto: {{docMedico.tramite.expediente.extracto}} <br>
+        <strong>Paciente: </strong><br>
+         {{agente}} - DNI: {{ agente.dni }} <br> 
+        Edad: {{ agente.fechaNacimiento | age }}  - Antiguedad: {{ agente.fechaAltaLaboral | age }} - Departamento: {{ agente.localidad.departamento }} <br>
+        <strong>Lugar de Trabajo:</strong> <br>
+       <small>{% for cargo in agente.cargo %} {{ cargo }} - {{ cargo.funcion }} - {{ cargo.revista }}{% endfor %} </small> 
+        <br>
+        
+        </p> 
+</div>
+      <div class="panel-body">
+
+{% block formulario %}
+    {{ form_start(form) }}
+         {{ form_errors(form) }}
+        {{ form_row(form.fechaDocumento, {'label': 'Fecha:'}) }}
+
+        {{ form_row(form.dictamen, {'label': 'Dictamen Medico:'}) }}
+        {{ form_row(form.Licencia.fechaDesde, {'label': 'Fecha A.T. o E.P.:'}) }}
+        {{ form_row(form.Licencia.fechaHasta, {'label': 'Fecha de Alta:'}) }}
+        {{ form_row(form.Licencia.enfermedad, {'label': 'Codigo Enf.:'}) }}
+        {{ form_row(form.Licencia.articulo, {'label': 'Articulo:'}) }}
+        {{ form_row(form.Licencia.diagnostico, {'label': 'Prestaciones:'}) }}
+         {{ form_rest(form) }}
+
+        <div class="text-right">
+                <input class="btn btn-danger"  type="submit" value="Guardar" />
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+{% endblock %}

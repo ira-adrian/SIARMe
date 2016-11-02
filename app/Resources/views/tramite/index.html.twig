@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Tramites list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Documentos</th>
+                <th>Tramite</th>
+                <th>Organismo Origen</th>
+                <th>Fechaorigen</th>
+                <th>Organismo Destino</th>
+                <th>Fechadestino</th>
+                <th>Estado</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tramite in tramites %}
+            <tr>
+                <td><a href="{{ path('backend_tramite_show', { 'id': tramite.id }) }}">{{ tramite.id }}</a></td>
+                <td>{{ tramite.organismoOrigen }}</td>
+                <td>{% if tramite.fechaOrigen %}{{ tramite.fechaOrigen|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ tramite.organismoDestino }}</td>
+                <td>{% if tramite.fechaDestino %}{{ tramite.fechaDestino|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if tramite.estado %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('backend_tramite_show', { 'id': tramite.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('backend_tramite_edit', { 'id': tramite.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_tramite_new') }}">Create a new tramite</a>
+        </li>
+    </ul>
+{% endblock %}

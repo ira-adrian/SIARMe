@@ -1,0 +1,14 @@
+{% extends 'DocumentoBundle:docadministrativo:layout_new.html.twig' %}
+
+{% block tipodocumento %} TURNO DE JUNTA MEDICA  {% endblock %}
+{% block formulario %}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.fechaDocumento, {'label': 'Fecha:'}) }}
+        {{ form_row(form.fechaTurnoCitacion, {'label': 'Fecha de Turno:'}) }}
+        {{ form_row(form.hora, {'label': 'Hora:'}) }}
+        <div class="text-right">
+                <input class="btn btn-danger"  type="submit" value="Guardar" />
+        </div>
+         {{ form_end(form) }}
+{% endblock %}

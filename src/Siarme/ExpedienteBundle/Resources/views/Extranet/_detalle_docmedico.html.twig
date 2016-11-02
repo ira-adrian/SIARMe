@@ -1,0 +1,12 @@
+<div class="col-md-2 text-center">
+        <h3>  <a  
+	{% if not (is_granted('ROLE_USUARIO')) %}
+        	href="{{ path('extranet_docmedico_show', { 'id': docMedico.id }) }}"
+
+	{% endif %}
+        	> <span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+        <small>
+        <strong>{{ docMedico }}  <br> N°: {{ docMedico.numero }}</strong><br>
+         {% if docMedico.fechaDocumento %}{{ docMedico.fechaDocumento|date('d-m-Y') }}{% endif %} <br>        
+        </small>
+</div>

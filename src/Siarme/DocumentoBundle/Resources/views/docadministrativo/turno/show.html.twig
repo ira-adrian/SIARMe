@@ -1,0 +1,14 @@
+{% extends 'DocumentoBundle:docadministrativo:layout_show.html.twig' %}
+
+{% block tipodocumento %}CONSTANSIA DE TURNO  {% endblock %}
+{% block cuerpo %}
+
+<p class="text-justify">
+---------La Dirección Provincial de Reconocimientos Médicos, hace constar por la presente que el  Agente: {{ docAdministrativo.tramite.expediente.agente }} , DNI:{{ docAdministrativo.tramite.expediente.agente.dni }},  será evaluado en Junta Medica el día  {% if docAdministrativo.fechaTurnoCitacion %}{{ docAdministrativo.fechaTurnoCitacion|date('Y-m-d') }}{% endif %} en el horario {% if docAdministrativo.hora %}{{ docAdministrativo.hora|date('H:i') }}{% endif %}.- </p>
+<p>---------Se expide la presente para ser presentada ante las autoridades que la requieran </p>
+
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

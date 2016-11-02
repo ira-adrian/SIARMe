@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Agente</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ agente.id }}</td>
+            </tr>
+            <tr>
+                <th>Apellidonombre</th>
+                <td>{{ agente.apellidoNombre }}</td>
+            </tr>
+            <tr>
+                <th>Cuil</th>
+                <td>{{ agente.cuil }}</td>
+            </tr>
+            <tr>
+                <th>Dni</th>
+                <td>{{ agente.dni }}</td>
+            </tr>
+            <tr>
+                <th>Fechanacimiento</th>
+                <td>{% if agente.fechaNacimiento %}{{ agente.fechaNacimiento|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechaaltalaboral</th>
+                <td>{% if agente.fechaAltaLaboral %}{{ agente.fechaAltaLaboral|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Domicilio</th>
+                <td>{{ agente.domicilio }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ agente.slug }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_agente_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('backend_agente_edit', { 'id': agente.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

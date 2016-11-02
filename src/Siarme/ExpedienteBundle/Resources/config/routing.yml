@@ -1,0 +1,4 @@
+expediente_backend_expediente:
+    resource: "@ExpedienteBundle/Resources/config/routing/expediente.yml"
+    prefix:   /extranet/expediente
+

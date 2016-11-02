@@ -1,0 +1,36 @@
+{% extends 'extranet.html.twig' %}
+
+{% block sidebar %} {% endblock %}
+    
+{% block main %}
+<div class="col-sm-offset col-sm-8">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+            <h4>{% block tipodocumento %} PROVEIDO  {% endblock %}</h4>
+            <p class="text-uppercase h6 text-left"> <strong>
+            Referencia: {{docAdministrativo.tramite.expediente}}<br>
+            Iniciador: {{docAdministrativo.tramite.expediente.agente}}  <br>
+            Extracto: {{docAdministrativo.tramite.expediente.extracto | upper}} <br>
+            </strong>
+            </p> 
+        </div>
+     <div class="panel-body">
+        {% block formulario %}  
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.fechaDocumento, {'label': 'Fecha:'}) }}
+            <div>
+                <span> </span>
+            {{ form_row(form.dirigidoA, {'label': 'Se remiten las presentes actuaciones A:'}) }}
+            {{ form_row(form.texto, {'label': 'Motivo/Razon:'}) }}
+            </div>
+
+            <div class="text-right">
+                    <input class="btn btn-danger"  type="submit" value="Guardar" />
+            </div>
+             {{ form_end(form) }}
+        {% endblock %}
+     </div>
+    </div>
+</div>
+{% endblock %}

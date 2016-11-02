@@ -1,0 +1,24 @@
+backend_expediente_index:
+    path:     /
+    defaults: { _controller: "ExpedienteBundle:Expediente:index" }
+    methods:  GET
+
+backend_expediente_show:
+    path:     /{id}/ver
+    defaults: { _controller: "ExpedienteBundle:Expediente:show" }
+    methods:  GET
+
+backend_expediente_new:
+    path:     /nuevo
+    defaults: { _controller: "ExpedienteBundle:Expediente:new" }
+    methods:  [GET, POST]
+
+backend_expediente_edit:
+    path:     /{id}/editar
+    defaults: { _controller: "ExpedienteBundle:Expediente:edit" }
+    methods:  [GET, POST]
+
+backend_expediente_delete:
+    path:     /{id}/eliminar
+    defaults: { _controller: "ExpedienteBundle:Expediente:delete" }
+    methods:  DELETE

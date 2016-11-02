@@ -1,0 +1,187 @@
+{% extends '::base.html.twig' %}
+
+
+{% block title %} {{app.user.departamentoRm | upper }}{% endblock %}
+{% block stylesheets %}
+  {# Cambiar Theme por defecto de bosstraps a Theme United #}
+  {% stylesheets '@bootstrap_united_css'  %}
+     <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+{% endblock %}
+
+{% block header %}
+<header>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-1" aria-expanded="false">
+        <span class="sr-only">Desplegar</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="navbar-brand" href="{{ path('extranet') }}"><span class="glyphicon glyphicon-plus-sign text-defaul"> </span> 
+
+          {% if is_granted('ROLE_USUARIO') %} 
+              
+              MESA DE ENTRADA
+
+          {% else %}
+
+
+           {{app.user.departamentoRm | upper }}
+
+          {% endif %}
+
+         </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="collapse-1" >
+      <ul class="nav navbar-nav">
+        <li><a ></a></li>
+      </ul>
+      
+        <form class="navbar-form navbar-left" method="get" action="" role="search">
+        <div class="form-group">
+          <input name="consulta" value="{{ app.request.get('consulta') }}" type="text" class="form-control" placeholder="Buscar Expte.: Num.-Año" required />
+        </div>
+          <button type="submit" class="btn btn-primary" >Buscar</button>
+        </form> 
+
+
+{% if is_granted('ROLE_USUARIO') %} 
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="{{ path('backend_expediente_new') }}" class="btn btn-primary" role="button"> Crear Expediente</a>
+            </li>    
+        </ul>    
+{% endif %}  
+      <ul class="nav navbar-nav navbar-right"> 
+          <li>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <a href="{{ path('extranet_usuario_show', { 'id': app.user.id }) }}" >
+                  <span class="glyphicon glyphicon-user"></span>
+                  {{ app.user.username }}
+
+              </a> 
+              {% endif %}                   
+          </li>   
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span></a>
+            <ul class="dropdown-menu"
+              <li role="separator" class="divider"></li>
+               <li class="dropdown-header h5">Cambiar contraseña <span class="caret"></span></li>                    
+                          <form class="navbar-form"  method="post" action="{{ path('usuario_change_password') }}">
+                            {% set passwordCurrent= app.user.password %}                  
+                              <div class="form-group">
+                                <input class="hidden" style="visibility:hidden" type="password" value="{{ passwordCurrent }}" id="passwordCurrent" required>
+                               <input type="password" placeholder="Contraseña Actual" id="passwordUser" required>
+
+                              <input type="password" name="password"placeholder="Nueva Contraseña" id="password" required>
+                               <input type="password" placeholder="Repetir Contraseña" id="confirm_password" required>
+                              </div>
+                             <button type="submit" class="button btn-sm btn-primary">Confirmar</button>
+                          </form>
+                          <script>
+                              var password = document.getElementById("password")
+                                , confirm_password = document.getElementById("confirm_password"), password_current = document.getElementById("passwordCurrent")
+                                , password_user = document.getElementById("passwordUser");
+
+                              function validatePassword(){
+                                if(password.value != confirm_password.value) {
+                                  confirm_password.setCustomValidity("La contraseña no coincide");
+                                } else {
+                                  confirm_password.setCustomValidity('');
+                                }
+                              }
+
+                              function validatePasswordUser(){
+                                if(password_user.value != password_current.value) {
+                                  password_user.setCustomValidity("Ingrese la contraseña anterior");
+                                } else {
+                                  password_user.setCustomValidity('');
+                                }
+                              }
+                              password_user.onchange = validatePasswordUser;
+                              password_user.onkeyup = validatePasswordUser;
+                              password.onchange = validatePassword;
+                              confirm_password.onkeyup = validatePassword;                              
+                          </script>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li><a href="{{ path('usuario_logout') }}" class="bg-danger"> Cerrar sesion</p></a></li>
+            </ul>
+          </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+</header>
+{% endblock %}
+
+{% block mensaje %}
+  <div class="row">
+
+{#
+{% if app.request.hasPreviousSession %}
+    {% for tipo, mensajes in app.session.flashbag.all() %}
+        {% for mensaje in mensajes %}
+            <p class="flash flash-{{ tipo }}">
+                {{ tipo == 'error' ? '<strong>Error</strong> '|raw }}
+                {{ mensaje }}
+            </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}#}
+
+
+    {% for flashMessage in app.session.flashbag.get('mensaje-warning') %}
+       <div class="col-md-2"></div>
+        <div class="alert alert-dismissible alert-warning">
+          <button type="button" class="close" data-dismiss="alert">&times; </button>
+
+            <div class="flash-notice">
+                {{ flashMessage | raw }}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.session.flashbag.get('mensaje-info') %}
+       <div class="col-md-2"></div>
+        <div class="alert alert-dismissible alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div class="flash-notice">
+                {{ flashMessage | raw }}
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% endblock %}
+
+{% block sidebar %}  
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  {% for departamento in departamentos %}
+    <small>
+    {% if is_granted('ROLE_USUARIO') or (app.user.departamentoRm == departamento) %}
+     <ul class="nav nav-list">
+        <li class="nav-header"> <a class="h5 bg-primary text-center" href="{{ path('extranet_expediente_departamento', { 'id': departamento.id }) }}"> {{departamento}} <span class="badge">{{departamento.expediente | length }}</span></a></li>
+        {% for  clasificacion in clasificaciones %}
+
+          <li class=""><a href="{{ path('extranet_expediente_clasificacion', { 'id': departamento.id, 'clasificacion_id' : clasificacion.id }) }}"> {{ clasificacion.clasificacion }} <span class="badge">{{ menu[departamento.departamentorm][clasificacion.clasificacion] }}  </span></a></li>
+
+        {% endfor %}
+           <li class=""> <a  href="{{ path('extranet_expediente_turno', { 'id': departamento.id }) }}"> Turnos <span class="badge"> {{ menu[departamento.departamentorm]["Turno"] }}</span></a></li>
+          <li class=""> <a href="{{ path('extranet_expediente_citacion', { 'id': departamento.id }) }}"> Citaciones <span class="badge"> {{ menu[departamento.departamentorm]["Citacion"] }} </span></a></li>
+      </ul>
+    {% endif %}
+    </small>
+    {% endfor %}
+{% endif %}
+ <ul class="nav nav-list">
+
+</ul>
+
+{% endblock %}
+

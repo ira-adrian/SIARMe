@@ -1,0 +1,19 @@
+backend_usuario_index:
+    path:     /
+    defaults: { _controller: "UsuarioBundle:Usuario:index" }
+    methods:  GET
+
+backend_usuario_new:
+    path:     /new
+    defaults: { _controller: "UsuarioBundle:Usuario:new" }
+    methods:  [GET, POST]
+
+backend_usuario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UsuarioBundle:Usuario:edit" }
+    methods:  [GET, POST]
+
+backend_usuario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UsuarioBundle:Usuario:delete" }
+    methods:  DELETE
