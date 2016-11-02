@@ -1,6 +1,6 @@
-Prototipo SIARMe para Symfony 2.8
+Prototipo SIARMe  
 ===================================
-Proyecto createdo en Septiembre 5, 2016, 10:24 pm.
+Proyecto creado empleando Symfony 2.8 el 5 de Septiembre de 2016, 10:24 pm.
 
 **SIARMe** es una aplicación de prueba desarrollada para la Direccion Prov. de Reconocimientoos Medicos 
 empleando Symfony 2.8. Se trata de un Portotipo de un sistema de Informacion Administrativa para la mencionada Institucion.
