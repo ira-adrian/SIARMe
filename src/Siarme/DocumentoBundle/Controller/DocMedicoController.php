@@ -15,26 +15,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 /**
  * Docmedico controller.
  *
- * @Route("extranet/docmedico")
+ * @Route("intranet/docmedico")
  */
 class DocMedicoController extends Controller
 {
-    /**
-     * Lists all docMedico entities.
-     *
-     * @Route("/", name="extranet_docmedico_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $docMedicos = $em->getRepository('DocumentoBundle:DocMedico')->findAll();
-
-        return $this->render('docmedico/index.html.twig', array(
-            'docMedicos' => $docMedicos,
-        ));
-    }
 
     /**
      * Creates a new docMedico entity.
@@ -60,17 +44,10 @@ class DocMedicoController extends Controller
         $docmedico->setLicencia($licencia);
         $licencia->setAgente($tramite->getExpediente()->getAgente());
         $licencia->setDocMedico($docmedico);
-         //  $clave = array_search( $slug , $docmedicos_slug);
+
 
         $docmedico->setLicencia($licencia);
-
-        //if ($slug == "acta-medica") {
-        //    $form = $this->createForm('Siarme\DocumentoBundle\Form\ActaMedicaType', $docmedico);
-        // }else{
-                $form = $this->createForm('Siarme\DocumentoBundle\Form\DocMedicoType', $docmedico);
-        //   }
-
-        // $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm('Siarme\DocumentoBundle\Form\DocMedicoType', $docmedico);
        
 
         $form->handleRequest($request);
@@ -78,7 +55,7 @@ class DocMedicoController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-           // $docmedico->getLicencia()->setAgente($agente);
+
             $docmedicos= $em->getRepository('DocumentoBundle:DocMedico')->findAll();
             $docmedico->setNumero((count($docmedicos) + 1) );
 
@@ -88,8 +65,8 @@ class DocMedicoController extends Controller
             return $this->redirectToRoute('extranet_docmedico_show', array('id' => $docmedico->getId()));
         }
 
-        return $this->render('DocumentoBundle:docmedico:'.$slug.'-new.html.twig', array(
-            'docMedico' => $docmedico,
+        return $this->render('DocumentoBundle:docmedico:/'.$slug.'/new.html.twig', array(
+            'documento' => $docmedico,
             'agente' => $tramite->getExpediente()->getAgente(),
             'form' => $form->createView(),
         ));
@@ -98,7 +75,7 @@ class DocMedicoController extends Controller
     /**
      * Finds and displays a docMedico entity.
      *
-     * @Route("/{id}", name="extranet_docmedico_show")
+     * @Route("/{id}/show", name="extranet_docmedico_show")
      * @Method("GET")
      */
     public function showAction(DocMedico $docMedico)
@@ -106,8 +83,8 @@ class DocMedicoController extends Controller
         $deleteForm = $this->createDeleteForm($docMedico);
         $slug= $docMedico->getSlug();
 
-       return $this->render('DocumentoBundle:docmedico:'.$slug.'.html.twig', array(
-            'docMedico' => $docMedico,
+       return $this->render('DocumentoBundle:docmedico:/'.$slug.'/show.html.twig', array(
+            'documento' => $docMedico,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -126,12 +103,14 @@ class DocMedicoController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('extranet_docmedico_edit', array('id' => $docMedico->getId()));
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje-info',
+                    'Se guardaron los cambios del documento <strong> '.$docMedico.' </strong> con EXITO...');
+            return $this->redirectToRoute('extranet_docmedico_show', array('id' => $docMedico->getId()));
         }
         $slug= $docMedico->getSlug();
-        return $this->render('DocumentoBundle:docmedico:'.$slug.'-edit.html.twig', array(
-            'docMedico' => $docMedico,
+        return $this->render('DocumentoBundle:docmedico:/'.$slug.'/edit.html.twig', array(
+            'documento' => $docMedico,
             'agente' => $docMedico->getLicencia()->getAgente(),
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -141,7 +120,8 @@ class DocMedicoController extends Controller
     /**
      * Deletes a docMedico entity.
      *
-     * @Route("/{id}", name="extranet_docmedico_delete")
+     * @Route("/{id}/delete", name="extranet_docmedico_delete")
+     * 
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, DocMedico $docMedico)
@@ -153,6 +133,9 @@ class DocMedicoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($docMedico);
             $em->flush($docMedico);
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje-info',
+                    'El documento <strong> '.$docMedico.' </strong> fue ELIMINADO...');
         }
 
         return $this->redirectToRoute('extranet');

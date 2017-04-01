@@ -1,6 +1,6 @@
 <div class="col-md-2 text-center">
         <h3>  <a  
-	{% if not (is_granted('ROLE_USUARIO')) %}
+	{% if is_granted('ROLE_MEDICO') %}
         	href="{{ path('extranet_docmedico_show', { 'id': docMedico.id }) }}"
 
 	{% endif %}

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-
-</html>
-
-<head>
+  <html lang="es">
+  <head>
      <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,10 +15,10 @@
 
         {% block rss %} {% endblock %}         
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
- 
-</head>
+  </head>
 
-<body>          
+  <body>          
+
   <div class="container-fluid body-container">
 
     {% block body %} 
@@ -44,16 +42,26 @@
          </footer>
         {% endblock %}
     </div>
-    {% block javascripts %}
+
+      {% block javascripts %}      
         {% javascripts 
-        '@jquery' 
-        '@bootstrap_js' %}
-
-            <script src="{{ asset_url }}"></script>
-
+                 '@jquery' 
+                 '@bootstrap_js' %}
+                  <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
-    {% endblock %}
-</div>
-</body>
 
-</html>
+        <script>
+              $(document).ready(function(){
+                var options = {mode:"popup", popHt: 500,   popWd: 400, popX: 500,   popY: 600,popTitle:"Imprimir Documento", popClose: false, strict: undefined};
+                  $("#printer").click(function(){
+                  $("div.print").printArea(options); 
+                  });      
+              });
+             
+              
+        </script>
+        
+       {% endblock %}
+  </div>
+  </body>
+  </html> 

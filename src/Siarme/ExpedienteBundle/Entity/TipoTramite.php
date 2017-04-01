@@ -108,6 +108,6 @@ class TipoTramite
      */
     public function getTramite()
     {
-        return $this->tramite;
+        return (string) $this->tramite;
     }
 }

@@ -276,6 +276,9 @@ class Licencia
         $this->fechaDocumento = new \DateTime();
       
     }
-
+    public function __toString()
+    {
+         return $this->getEnfermedad();
+    }
   
 }

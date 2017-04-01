@@ -3,13 +3,14 @@
 {% block sidebar %} {% endblock %}
     
 {% block main %}
+  
 <div class="col-sm-offset col-sm-8">
     <div class="panel panel-default">
         <div class="panel-heading text-center">  
              <h4>{% block tipodocumento %}  Informe Medico {% endblock %}</h4>        
 
         <p class="text-uppercase text-left"> 
-        <strong>Referencia: </strong>{{docMedico.tramite.expediente}} - Extracto: {{docMedico.tramite.expediente.extracto}} <br>
+        <strong>Referencia: </strong>{{documento.tramite.expediente}} - Extracto: {{documento.tramite.expediente.extracto}} <br>
         <strong>Paciente: </strong><br>
          {{agente}} - DNI: {{ agente.dni }} <br> 
         Edad: {{ agente.fechaNacimiento | age }}  - Antiguedad: {{ agente.fechaAltaLaboral | age }} - Departamento: {{ agente.localidad.departamento }} <br>

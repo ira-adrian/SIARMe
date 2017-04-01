@@ -1,17 +1,22 @@
 {% extends '::base.html.twig' %}
 
-
 {% block title %} {{app.user.departamentoRm | upper }}{% endblock %}
 {% block stylesheets %}
   {# Cambiar Theme por defecto de bosstraps a Theme United #}
   {% stylesheets '@bootstrap_united_css'  %}
      <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
+<style>
+  ul.navbar-nav li.active {
+    background-color: blue;
+}
+</style>
 {% endblock %}
+
 
 {% block header %}
 <header>
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default"  role="navigation">
     <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -21,35 +26,45 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="{{ path('extranet') }}"><span class="glyphicon glyphicon-plus-sign text-defaul"> </span> 
-
-          {% if is_granted('ROLE_USUARIO') %} 
-              
+        <a class="navbar-brand" href="{{ path('extranet') }}"><span class="glyphicon glyphicon-plus-sign "> </span> 
+     {% if not (is_granted('ROLE_ADMIN')) %}    
+          {% if is_granted('ROLE_USUARIO') %}               
               MESA DE ENTRADA
-
-          {% else %}
-
-
-           {{app.user.departamentoRm | upper }}
-
+            {% endif %}
+          
+          {% if is_granted('ROLE_MEDICO') %} 
+           {{app.user.departamentoRm | upper }} : Auditoría Médica 
           {% endif %}
 
+           {% if is_granted('ROLE_ADMINISTRATIVO') %} 
+           {{app.user.departamentoRm | upper }}: Área Administrativa
+          {% endif %}
+        {% endif %}
+        {% if is_granted('ROLE_USUARIO') %}               
+              SIARMe
+       {% endif %}
          </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="collapse-1" >
-      <ul class="nav navbar-nav">
-        <li><a ></a></li>
-      </ul>
-      
-        <form class="navbar-form navbar-left" method="get" action="" role="search">
-        <div class="form-group">
-          <input name="consulta" value="{{ app.request.get('consulta') }}" type="text" class="form-control" placeholder="Buscar Expte.: Num.-Año" required />
-        </div>
+
+        <form class="navbar-form navbar-left" method="get" action="{{ path('extranet_buscar') }}" role="search">
+          <div class="form-group">
+          <input name="consulta" data-toggle="tooltip" data-placement="bottom" title="Buscar por Numero y Año de Expte." value="{{ app.request.get('consulta') }}" type="text" class="form-control" placeholder="Buscar: Ej. 2036-2017" required />
+          </div>
           <button type="submit" class="btn btn-primary" >Buscar</button>
         </form> 
 
+      <ul class="nav navbar-nav">
+        {% if is_granted('ROLE_ADMINISTRATIVO') %} 
+          <li>          
+          
+           <a href="{{ path('extranet_informe_new')  }}" class="btn btn-primary" role="button">Generar Informe</a>
+       
+          </li>
+        {% endif %}
+      </ul>
 
 {% if is_granted('ROLE_USUARIO') %} 
         <ul class="nav navbar-nav">
@@ -58,23 +73,23 @@
             </li>    
         </ul>    
 {% endif %}  
+
       <ul class="nav navbar-nav navbar-right"> 
 
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span></a>
-            <ul class="dropdown-menu">
-               <li>
-                  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                  <a href="{{ path('extranet_usuario_show', { 'id': app.user.id }) }}" >
-                      <span class="glyphicon glyphicon-user"></span>
-                      {{ app.user.username }}
+             
+             <ul class="dropdown-menu">
+               <li class="dropdown-header">
+                     <span class="glyphicon glyphicon-user"></span>
+                      {{ app.user.apellidoNombre }}
+               </li>
 
-                  </a> 
-                  {% endif %}                   
-                </li>
-              <li role="separator" class="divider"> </li>
+               <li><a href="{{ path('extranet_usuario_show', { 'id': app.user.id }) }}" class="bg-danger"> Ver  Mis Datos Personales</a>
+               </li>
+               <li role="separator" class="divider"> 
+               </li>
        
-
                <li class="dropdown-header h5">Cambiar contraseña <span class="caret"></span></li>                    
                           <form class="navbar-form"  method="post" action="{{ path('usuario_change_password') }}">
                             {% set passwordCurrent= app.user.password %}                  
@@ -82,11 +97,12 @@
                                 <input class="hidden" style="visibility:hidden" type="password" value="{{ passwordCurrent }}" id="passwordCurrent" required>
                                <input type="password" placeholder="Contraseña Actual" id="passwordUser" required>
 
-                              <input type="password" name="password"placeholder="Nueva Contraseña" id="password" required>
+                              <input type="password" name="password" placeholder="Nueva Contraseña" id="password" required>
                                <input type="password" placeholder="Repetir Contraseña" id="confirm_password" required>
                               </div>
                              <button type="submit" class="button btn-sm btn-primary">Confirmar</button>
                           </form>
+
                           <script>
                               var password = document.getElementById("password")
                                 , confirm_password = document.getElementById("confirm_password"), password_current = document.getElementById("passwordCurrent")
@@ -112,19 +128,20 @@
                               password.onchange = validatePassword;
                               confirm_password.onkeyup = validatePassword;                              
                           </script>
-              </li>
-              <li role="separator" class="divider"></li>
-              <li><a href="{{ path('usuario_logout') }}" class="bg-danger"> Cerrar sesion</p></a></li>
-            </ul>
+              
+                        <li role="separator" class="divider"></li>                      
+             
+                      </ul>
+        
+            </li>
+           <li>
+
+                      <a href="{{ path('usuario_logout') }}" >
+                          <span class="glyphicon glyphicon-log-out"></span>
+                          Salir
+                      </a>                
           </li>
-                   <li>
-                  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                  <a href="{{ path('extranet_usuario_show', { 'id': app.user.id }) }}" >
-                      <span class="glyphicon glyphicon-user"></span>
-                      Salir
-                  </a> 
-                  {% endif %}                   
-                </li>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div>
@@ -134,19 +151,6 @@
 
 {% block mensaje %}
   <div class="row">
-
-{#
-{% if app.request.hasPreviousSession %}
-    {% for tipo, mensajes in app.session.flashbag.all() %}
-        {% for mensaje in mensajes %}
-            <p class="flash flash-{{ tipo }}">
-                {{ tipo == 'error' ? '<strong>Error</strong> '|raw }}
-                {{ mensaje }}
-            </p>
-        {% endfor %}
-    {% endfor %}
-{% endif %}#}
-
 
     {% for flashMessage in app.session.flashbag.get('mensaje-warning') %}
        <div class="col-md-2"></div>
@@ -158,7 +162,16 @@
             </div>
         </div>
     {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('mensaje-success') %}
+       <div class="col-md-2"></div>
+        <div class="alert alert-dismissible alert-success ">
+          <button type="button" class="close" data-dismiss="alert">&times; </button>
 
+            <div class="flash-notice text-center">
+               {{ flashMessage | raw }}
+            </div>
+        </div>
+    {% endfor %}
     {% for flashMessage in app.session.flashbag.get('mensaje-info') %}
        <div class="col-md-2"></div>
         <div class="alert alert-dismissible alert-info">
@@ -172,27 +185,36 @@
 {% endblock %}
 
 {% block sidebar %}  
-{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
   {% for departamento in departamentos %}
     <small>
+
     {% if is_granted('ROLE_USUARIO') or (app.user.departamentoRm == departamento) %}
-     <ul class="nav nav-list">
-        <li class="nav-header"> <a class="h5 bg-primary text-center" href="{{ path('extranet_expediente_departamento', { 'id': departamento.id }) }}"> {{departamento}} <span class="badge">{{departamento.expediente | length }}</span></a></li>
+      <ul class="nav nav-list"  role="navigation">
+        <li class="nav-header" > <a class="h5 bg-primary text-center" href="{{ path('extranet_expediente_departamento', { 'id': departamento.id }) }}"> {{departamento}} <span class="badge">{{departamento.expediente | length }}</span></a></li>
         {% for  clasificacion in clasificaciones %}
 
-          <li class=""><a href="{{ path('extranet_expediente_clasificacion', { 'id': departamento.id, 'clasificacion_id' : clasificacion.id }) }}"> {{ clasificacion.clasificacion }} <span class="badge">{{ menu[departamento.departamentorm][clasificacion.clasificacion] }}  </span></a></li>
+          <li><a href="{{ path('extranet_expediente_clasificacion', { 'id': departamento.id, 'clasificacion_id' : clasificacion.id }) }}"> {{ clasificacion.clasificacion }} <span class="badge">{{ menu[departamento.departamentorm][clasificacion.clasificacion] }}  </span></a></li>
 
         {% endfor %}
-           <li class=""> <a  href="{{ path('extranet_expediente_turno', { 'id': departamento.id }) }}"> Turnos <span class="badge"> {{ menu[departamento.departamentorm]["Turno"] }}</span></a></li>
-          <li class=""> <a href="{{ path('extranet_expediente_citacion', { 'id': departamento.id }) }}"> Citaciones <span class="badge"> {{ menu[departamento.departamentorm]["Citacion"] }} </span></a></li>
+           <li > <a class="h5 bg-info text-center" href="{{ path('extranet_expediente_turno', { 'id': departamento.id }) }}"> Turnos <span class="badge alert-danger"> {{ menu[departamento.departamentorm]["Turno"] }}</span></a></li>
+          <li > <a class="h5 bg-info text-center" href="{{ path('extranet_expediente_citacion', { 'id': departamento.id }) }}"> Citaciones <span class="badge alert-danger"> {{ menu[departamento.departamentorm]["Citacion"] }} </span></a></li>
       </ul>
     {% endif %}
+
     </small>
     {% endfor %}
-{% endif %}
+
  <ul class="nav nav-list">
 
 </ul>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
 
 {% endblock %}
 

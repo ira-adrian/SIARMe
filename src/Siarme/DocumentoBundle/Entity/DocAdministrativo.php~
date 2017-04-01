@@ -3,6 +3,7 @@
 namespace Siarme\DocumentoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Siarme\AusentismoBundle\Util\Slugger;
 
 /**
  * DocAdministrativo
@@ -38,6 +39,13 @@ class DocAdministrativo
     /**
      * @var string
      *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="tipo_documento", type="string", length=255)
      */
     private $tipoDocumento;
@@ -55,6 +63,13 @@ class DocAdministrativo
      * @ORM\Column(name="texto", type="text")
      */
     private $texto;
+
+     /**
+     * @var bool
+     *
+     * @ORM\Column(name="estado", type="boolean")
+     */
+    private $estado;
 
     /**
      * @var \DateTime
@@ -74,6 +89,7 @@ class DocAdministrativo
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     private $tramite;
+
 
     /**
      * Get id
@@ -277,5 +293,88 @@ class DocAdministrativo
     public function getFechaCreacion()
     {
         return $this->fechaCreacion;
+    }
+
+    /**
+     * Set tipoDocumento
+     *
+     * @param string $tipoDocumento
+     *
+     * @return DocAdministrativo
+     */
+    public function setTipoDocumento($tipoDocumento)
+    {
+        $this->tipoDocumento = $tipoDocumento;
+        // $this->slug = Slugger::getSlug($tipoDocumento);
+
+        return $this;
+    }
+
+    /**
+     * Get tipoDocumento
+     *
+     * @return string
+     */
+    public function getTipoDocumento()
+    {
+        return $this->tipoDocumento;
+    }
+    
+
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return DocAdministrativo
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        // $this->slug = Slugger::getSlug($tipoDocumento);
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     *  ToString
+     */
+        public function __toString()
+    {
+       return  $this->getTipoDocumento();
+    }
+    /**
+     * Set estado
+     *
+     * @param boolean $estado
+     *
+     * @return TurnoCitacion
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return boolean
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

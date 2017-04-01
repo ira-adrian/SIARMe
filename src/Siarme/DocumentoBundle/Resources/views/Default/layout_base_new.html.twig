@@ -1,0 +1,29 @@
+{% extends 'extranet.html.twig' %}
+
+{% block sidebar %} {% endblock %}
+    
+{% block main %}
+<div id= "documento" class="col-sm-offset col-sm-8">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">  
+            <h4>{% block tipodocumento %}   {% endblock %}</h4>
+            <p class ="text-uppercase text-left"> <strong>
+            Referencia: {{documento.tramite.expediente}}<br>
+            Iniciador: {{documento.tramite.expediente.agente}}  <br>
+            Extracto: {{documento.tramite.expediente.extracto | upper}} <br> 
+            </strong>
+            </p> 
+        </div>
+
+         <div class="panel-body">
+  
+
+        {% block formulario %}
+          
+        {% endblock %}
+
+
+         </div>
+    </div>                     
+</div>
+{% endblock %}

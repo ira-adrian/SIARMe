@@ -6,34 +6,38 @@ imports:
     - { resource: "@ExpedienteBundle/Resources/config/services.yml" }
     - { resource: "@UsuarioBundle/Resources/config/services.yml" }
     - { resource: "@AusentismoBundle/Resources/config/services.yml" }
- #   - { resource: parameters.yml }
+
+ivory_ck_editor:
+    default_config: default
+
+
+
+easy_admin:
+    entities:
+        - Siarme\ExpedienteBundle\Entity\Expediente
+        - Siarme\ExpedienteBundle\Entity\Tramite
+        - Siarme\DocumentoBundle\Entity\DocAdministrativo
+        - Siarme\DocumentoBundle\Entity\DocMedico
+        - Siarme\AusentismoBundle\Entity\Licencia
+        - Siarme\AusentismoBundle\Entity\Agente
+        - Siarme\UsuarioBundle\Entity\Usuario
+    site_name: 'SIARMe'
+
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: es
 
     tipodoc:
         medico: 
-            acta-medica: 'Acta Medica'             
+            acta-medica: 'Acta de Junta Medica'             
             informe-medico: 'Informe Medico'
 
         administrativo: 
-            proveido:
-                 nombre: 'Proveido'
-                 path: 'extranet_docadministrativo_new'
-                 show: 'extranet_docadministrativo_show'
-                 edit: 'extranet_docadministrativo_edit'
-            turno: 
-                 nombre: 'Turno'
-                 path: 'extranet_turnocitacion_new'
-                 show: 'extranet_turnocitacion_show'
-                 edit: 'extranet_turnocitacion_edit'
-            citacion: 
-                 nombre: 'Citacion'
-                 path: 'extranet_turnocitacion_new'
-                 show: 'extranet_turnocitacion_show'
-                 edit: 'extranet_turnocitacion_edit'
+            proveido: 'Proveido'  
+            turno: 'Constancia de Turno'
+            citacion: 'Citacion'
+
                  
 framework:
     #esi:             ~
@@ -103,13 +107,17 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-# Assetic Configuration   
+  
+
+
+
+# Assetic Configuration 
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
-
     filters:
         cssrewrite: ~
+
     assets:
         bootstrap_js:
             inputs:
@@ -118,16 +126,19 @@ assetic:
             inputs:
                 - '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.css'
                 - '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap-theme.css'
-                #- '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'
-        
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'
+            filters: ['cssrewrite']
 
         bootstrap_united_css:
-
             inputs:
+                #- '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.css'
+               # - '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap-theme.css'
                 - '%kernel.root_dir%/Resources/assets/css/bootstrap_united.min.css'
             filters: ['cssrewrite']
         bootstrap_cerulean_css:
             inputs:
+                #- '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.css'
+                #- '%kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap-theme.css'
                 - '%kernel.root_dir%/Resources/assets/css/bootstrap_cerulean.min.css'
             filters: ['cssrewrite']
 
@@ -152,3 +163,4 @@ assetic:
         jquery:
             inputs:
                 - '%kernel.root_dir%/../vendor/components/jquery/jquery.js'
+                - '%kernel.root_dir%/Resources/assets/jquery.PrintArea.js'

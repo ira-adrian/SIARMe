@@ -32,8 +32,11 @@ class ExpedienteRepository extends EntityRepository
         foreach ($departamentos as $departamento) { 
 
               $consulta = $em->createQuery(
-                       'SELECT e
-                        FROM ExpedienteBundle:Expediente e 
+                       'SELECT e, t, d, c
+                        FROM ExpedienteBundle:Expediente e  
+                        JOIN e.tramite t
+                        JOIN e.departamentoRm d
+                        JOIN e.clasificacion c
                       WHERE e.departamentoRm = :id 
                        ');
               $consulta->setParameter('id', $departamento->getId());
@@ -60,8 +63,6 @@ class ExpedienteRepository extends EntityRepository
                  $menu['Turno'] = count($this->queryFindTurno($departamento->getId())->getResult());
             }
 
-
-
             $menu_principal[$departamento->getDepartamentoRm()]= $menu;
             
         }
@@ -79,13 +80,13 @@ class ExpedienteRepository extends EntityRepository
         $em = $this->getEntityManager();
 
          $consulta = $em->createQuery(
-            'SELECT e, a, t, c, d, tc
+            'SELECT e
              FROM ExpedienteBundle:Expediente e 
              JOIN e.agente a  
-             JOIN e.tramite t JOIN t.turnoCitacion tc
+             JOIN e.tramite t JOIN t.docAdministrativo tc
              JOIN e.clasificacion c
              JOIN e.departamentoRm d
-             WHERE e.departamentoRm = :id AND e.estado = :estado AND t.estadoTurnoCitacion = :estadoTyC AND tc.tipoDocumento = :tipo 
+             WHERE e.departamentoRm = :id AND t.estado = :estado AND tc.slug = :tipo 
              ORDER BY a.apellidoNombre ASC'
             );
 
@@ -93,7 +94,7 @@ class ExpedienteRepository extends EntityRepository
         // si estado de expediente es True => INICIADO si False=> CONCLUIDO
         // si estadoTurnoCitacion de tramite es True => con turno  si False=> sin turno
         $consulta->setParameter('estado', false);
-        $consulta->setParameter('estadoTyC', true);
+        //$consulta->setParameter('estadoTyC', true);
         $consulta->setParameter('tipo', "citacion");
                 
         return  $consulta;  
@@ -110,13 +111,13 @@ class ExpedienteRepository extends EntityRepository
         $em = $this->getEntityManager();
 
          $consulta = $em->createQuery(
-            'SELECT e, a, t, c, d, tc
+            'SELECT e
              FROM ExpedienteBundle:Expediente e 
              JOIN e.agente a  
-             JOIN e.tramite t JOIN t.turnoCitacion tc
+             JOIN e.tramite t JOIN t.docAdministrativo tc
              JOIN e.clasificacion c
              JOIN e.departamentoRm d
-             WHERE e.departamentoRm = :id AND e.estado = :estado AND t.estadoTurnoCitacion = :estadoTyC AND tc.tipoDocumento = :tipo 
+             WHERE e.departamentoRm = :id AND t.estado = :estado AND tc.slug = :tipo 
              ORDER BY a.apellidoNombre ASC'
             );
 
@@ -124,7 +125,7 @@ class ExpedienteRepository extends EntityRepository
         // si estado de expediente es True => INICIADO si False=> CONCLUIDO
         // si estadoTurnoCitacion de tramite es True => con turno  si False=> sin turno
         $consulta->setParameter('estado', false);
-        $consulta->setParameter('estadoTyC', true);
+       // $consulta->setParameter('estadoTyC', true);
         $consulta->setParameter('tipo', "turno");
                 
         return  $consulta;  
@@ -143,10 +144,10 @@ class ExpedienteRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $consulta = $em->createQuery(
-            'SELECT e, a, t, c, d
+            'SELECT e, a, t, c, d, tc
              FROM ExpedienteBundle:Expediente e 
              JOIN e.agente a  
-             JOIN e.tramite t 
+             JOIN e.tramite t JOIN t.docAdministrativo tc
              JOIN e.clasificacion c
              JOIN e.departamentoRm d
             ORDER BY a.apellidoNombre ASC'
@@ -168,7 +169,9 @@ class ExpedienteRepository extends EntityRepository
         $consulta = $em->createQuery(
                         'SELECT e
                         FROM ExpedienteBundle:Expediente e
-                        WHERE e.departamentoRm = :id 
+                        JOIN e.agente a  
+                        WHERE e.departamentoRm = :id
+                        ORDER BY a.apellidoNombre ASC
                         ');
         $consulta->setParameter('id', $id);
                 
@@ -188,7 +191,9 @@ class ExpedienteRepository extends EntityRepository
         $consulta = $em->createQuery(
                         'SELECT e
                         FROM ExpedienteBundle:Expediente e
+                        JOIN e.agente a  
                         WHERE e.departamentoRm = :id AND e.clasificacion = :clasificacion_id
+                        ORDER BY a.apellidoNombre ASC
                         ');
         $consulta->setParameter('id', $id);
         $consulta->setParameter('clasificacion_id', $clasificacion_id);
@@ -240,10 +245,10 @@ class ExpedienteRepository extends EntityRepository
             'SELECT e, a, t, c, d, tc
              FROM ExpedienteBundle:Expediente e 
              JOIN e.agente a  
-             JOIN e.tramite t JOIN t.turnoCitacion tc
+             JOIN e.tramite t JOIN t.docAdministrativo tc
              JOIN e.clasificacion c
              JOIN e.departamentoRm d
-             WHERE e.departamentoRm = :id AND e.estado = :estado AND t.estadoTurnoCitacion = :estadoTyC AND tc.tipoDocumento = :tipo 
+             WHERE e.departamentoRm = :id AND t.estado = :estado AND tc.slug = :tipo 
              ORDER BY a.apellidoNombre ASC'
             );
 
@@ -251,7 +256,7 @@ class ExpedienteRepository extends EntityRepository
         // si estado de expediente es True => INICIADO si False=> CONCLUIDO
         // si estadoTurnoCitacion de tramite es True => con turno  si False=> sin turno
         $consulta->setParameter('estado', false);
-        $consulta->setParameter('estadoTyC', true);
+       // $consulta->setParameter('estadoTyC', true);
         $consulta->setParameter('tipo', "turno");
                 
         return  $consulta->getResult();  
@@ -271,10 +276,10 @@ class ExpedienteRepository extends EntityRepository
             'SELECT e, a, t, c, d, tc
              FROM ExpedienteBundle:Expediente e 
              JOIN e.agente a  
-             JOIN e.tramite t JOIN t.turnoCitacion tc
+             JOIN e.tramite t JOIN t.docAdministrativo tc
              JOIN e.clasificacion c
              JOIN e.departamentoRm d
-             WHERE e.departamentoRm = :id AND e.estado = :estado AND t.estadoTurnoCitacion = :estadoTyC AND tc.tipoDocumento = :tipo 
+             WHERE e.departamentoRm = :id AND t.estado = :estado AND tc.slug = :tipo 
              ORDER BY a.apellidoNombre ASC'
             );
 
@@ -282,7 +287,7 @@ class ExpedienteRepository extends EntityRepository
         // si estado de expediente es True => INICIADO si False=> CONCLUIDO
         // si estadoTurnoCitacion de tramite es True => con turno  si False=> sin turno
         $consulta->setParameter('estado', false);
-        $consulta->setParameter('estadoTyC', true);
+       // $consulta->setParameter('estadoTyC', true);
         $consulta->setParameter('tipo', "citacion");
                 
         return  $consulta->getResult();  

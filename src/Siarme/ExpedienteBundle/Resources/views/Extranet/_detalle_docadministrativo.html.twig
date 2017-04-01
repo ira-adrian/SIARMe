@@ -1,8 +1,7 @@
 <div class="col-md-2 text-center">
-		{% set path = tipodoc.administrativo[docAdministrativo.slug]["show"] %}
         <h3>  <a  
-     {% if not is_granted('ROLE_USUARIO') %}
-        	href="{{ path(path , { 'id': docAdministrativo.id }) }}"
+     {% if  is_granted('ROLE_ADMINISTRATIVO') or is_granted('ROLE_MEDICO')  %}
+        	href="{{ path('extranet_docadministrativo_show' , { 'id': docAdministrativo.id }) }}"
 		{% endif %}
 
         	> <span class="glyphicon glyphicon glyphicon-file"></span></a></h3>

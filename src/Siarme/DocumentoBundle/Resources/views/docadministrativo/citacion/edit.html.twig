@@ -1,14 +1,2 @@
-{% extends 'DocumentoBundle:docadministrativo:layout_new.html.twig' %}
-
-{% block tipodocumento %} CITACION {% endblock %}
-{% block formulario %}
-        {{ form_start(edit_form) }}
-        {{ form_errors(edit_form) }}
-        {{ form_row(edit_form.fechaDocumento, {'label': 'Fecha:'}) }}
-        {{ form_row(edit_form.fechaTurnoCitacion, {'label': 'Fecha de Citación para el Agente de Referencia:'}) }}
-        {{ form_row(edit_form.hora, {'label': 'Hora:'}) }}
-        <div class="text-right">
-                <input class="btn btn-danger"  type="submit" value="Guardar" />
-        </div>
-         {{ form_end(edit_form) }}
-{% endblock %}
+{% extends 'DocumentoBundle:docadministrativo:layout_edit.html.twig' %}
+{% block tipodocumento %} {{ documento.tipoDocumento | upper }}  {% endblock %}

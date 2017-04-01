@@ -111,7 +111,7 @@ class Clasificacion
 
     public function __toString()
     {
-        return $this->getClasificacion();
+        return (string) $this->getClasificacion();
     }    
 
 }

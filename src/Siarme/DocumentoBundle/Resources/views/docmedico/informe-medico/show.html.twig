@@ -1,0 +1,42 @@
+{% extends 'DocumentoBundle:docmedico:layout_show.html.twig' %}
+
+ {% block tipodocumento %}
+    <p class="text-center"> <strong> {{ documento.tipoDocumento | upper }} </strong> </p>
+{% endblock %}
+{% block cuerpo %}
+        <p  class="text-justify">
+            <strong>VISTO: </strong> <br> 
+            El Expediente {{documento.tramite.expediente}} Caratulado como
+            Extracto: {{documento.tramite.expediente.extracto | upper}}
+        </p> 
+
+        <p class="text-justify"><strong>CONSIDERANDO:</strong> <br>
+             Los elementos de juicio presentados en los autos de referencia, y teniendo en cuenta la valoración 
+            Clínica del examinado en el día de la fecha, esta  Junta  Medica, dependiente de la Dirección de Inspección Laboral:
+        </p>
+
+        <p class="text-center"> <strong>DICTAMINA:</strong></p>
+
+        <p class="text-justify"><strong>PRIMERO:</strong> <br>
+            Que la patología denunciada por el/la  Sr/a: {{documento.licencia.agente}} D.N.I. N°: {{documento.licencia.agente.dni}} Edad:{{documento.licencia.agente.fechaNacimiento | age }} ,  Antigüedad:{{documento.licencia.agente.fechaAltaLaboral | age }} , Lugar de Trab: {% for cargo in documento.licencia.agente.cargo %} {{ cargo.organismo}} - {% endfor %} es: <em><strong> {{documento.licencia.articulo.descripcion}} </strong></em>
+        </p>
+
+        <p class="text-justify"><strong>SEGUNDO:</strong> <br>
+
+            <strong>Datos Asistenciales: </strong> <br>
+            Fecha de A.T .o E.P.: {{documento.licencia.fechaDesde | date('d-m-Y') }} ---  Fecha de Ingreso: {{documento.licencia.fechaDocumento | date('d-m-Y') }}  <br>
+
+            <strong>Evaluacion:</strong> <br>
+            <p class="text-justify">
+            <em><strong>{{ documento.dictamen }}</strong> </em> 
+            </p>
+        </p>
+
+        <hr>
+        <p>Diagnostico Codificado:<strong> {{documento.licencia.enfermedad.codigoEnfermedad}}  </strong> </p>
+        <p>
+            Prestaciones en especie a seguir brindando (Prótesis, ortesis, etc.); {{ documento.licencia.diagnostico }}
+        </p> 
+                FECHA DE ALTA MÉDICA:   {{documento.licencia.fechaHasta | date('d-m-Y') }} 
+           <p></p>                
+{% endblock %}

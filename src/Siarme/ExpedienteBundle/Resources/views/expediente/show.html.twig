@@ -14,20 +14,27 @@
             <li>
                 <a class="btn btn-info btn-sm" href="{{ path('backend_expediente_edit', { 'id': expediente.id }) }}">Editar</a>
             </li>
+{% if is_granted('ROLE_USUARIO') %} 
             <li>
                 {% if (expediente.tramite | length ) < 1 %}
-                {{ form_start(delete_form) }}
+                  
+                {{ form_start(delete_form, {'attr': {'onclick': 'return confirm("¿Desea ELIMINAR el expediente?")'}}) }}
                     <input class="btn btn-danger btn-sm" type="submit" value="Eliminar">
                 {{ form_end(delete_form) }}
                 {% endif %}
+            </li>
+{% endif %}
+            <li>     <a class="btn btn-info btn-sm" id="printer"  value="Imprimir" role="button"> <span class="glyphicon glyphicon-print">  </span> Imprimir </a>
             </li>
         </ul>
     </nav>
 
 <div class="col-md-10">
-    <div class="panel panel-default">
+    <div id="print" class="panel panel-default print">
         <div class="panel-heading text-center">  
-             <h4>Detalle de Expediente</h4>
+        <p> <small> DIRECCION PROVINCIAL DE RECONOCIMIENTOS MEDICOS </small>
+         </p>
+             <h3>DETALLE DE EXPEDIENTE</h3>
         </div>
         <div class="panel-body">
             <table>

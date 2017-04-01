@@ -77,7 +77,7 @@ class Expte extends AbstractFixture implements OrderedFixtureInterface, Containe
             $agentes = $manager->getRepository('AusentismoBundle:Agente')->findAll();
             $clasificaciones = $manager->getRepository('ExpedienteBundle:Clasificacion')->findAll();
             $departamentosRm = $manager->getRepository('AusentismoBundle:DepartamentoRm')->findAll();
-        for ($i=1; $i <= 50; $i++) { 
+        for ($i=1; $i <= 80; $i++) { 
             $d = $departamentosRm[array_rand($departamentosRm)];
             $a= $agentes[array_rand($agentes)];
             $c= $clasificaciones[array_rand($clasificaciones)];
@@ -106,23 +106,20 @@ class Expte extends AbstractFixture implements OrderedFixtureInterface, Containe
         
         // Crear 3 Tramites de Prueba para cada Expediente  
 
-        $departamentosRm = $manager->getRepository('AusentismoBundle:DepartamentoRm')->findAll();
         $tipoTramites = $manager->getRepository('ExpedienteBundle:TipoTramite')->findAll();
         $expedientes = $manager->getRepository('ExpedienteBundle:Expediente')->findAll();
         $organismos = $manager->getRepository('AusentismoBundle:Organismo')->findAll();
         
-        foreach ($expedientes as $e) {
-            
+        foreach ($expedientes as $e) {            
 
                 $d = $departamentosRm[array_rand($departamentosRm)];
                 $o = $organismos[array_rand($organismos)];
                 //$e = $expedientes[array_rand($expedientes)];
                 $t = $tipoTramites[array_rand($tipoTramites)];
                 $random= rand(0,4);
-                $estado=0;
+                $estado=$e->getEstado();
                 $estadot=1;
             for ($i=0; $i < $random; $i++) { 
-
                 $tramite = New Tramite();
                 $tramite -> setOrganismoOrigen($o);
                 $o = $organismos[array_rand($organismos)];
@@ -131,18 +128,19 @@ class Expte extends AbstractFixture implements OrderedFixtureInterface, Containe
                 $tramite -> setFechaOrigen(new \DateTime('now - '.rand(20, 1800).' days'));
                 $tramite -> setFechaDestino(new \DateTime('now - '.rand(1, 365).' days'));
                 // estados 0-Transito ,1-Concluido
-                $tramite -> setEstado($estado=0);
+                $tramite -> setEstado($estado);
                 $tramite -> setDepartamentoRm($d);
                 $tramite -> setEstadoTurnoCitacion($estadot);
                 $tramite -> setExpediente($e);
                 $manager -> persist($tramite);
-                $estado=1;
+                if ($estado == 0) {
+                    $estado=1;
+                }               
                 $estadot=0;
             }
         }
         $manager -> flush();
-
-}  
+ }  
 
 
 

@@ -1,0 +1,69 @@
+{% extends 'extranet.html.twig' %} 
+
+{% block sidebar %} 
+{% endblock %}
+
+{% block main %}
+    <nav class="navbar  navbar-info  navbar-fixed-bottom">
+     <ul class="list-inline text-center" >
+            <li>     <a class="btn btn-info btn-sm" id="printer"  value="Imprimir" role="button"> <span class="glyphicon glyphicon-print">  </span> Imprimir </a>
+            </li>
+     </ul> 
+    </nav><!-- /.navbar-menu -->
+<div class="col-sm-offset col-sm-9">
+
+<div  id="print"  class="panel panel-default print">
+
+    <div class="panel-heading text-center"> 
+         <p> 
+            <img src="{{ asset('escudo.png') }}" alt="Escudo..." class="img-rounded" width="50" height="50"> <br>   
+            <small>Poder Ejecutivo <br>
+            Secretaria General De La Gobernacion<br>
+            Subsecretaria  De Recursos Humanos Gestion Pública<br>
+            DIRECCION PROVINCIAL SERVICIO DE RECONOCIMIENTO </small>
+         </p>
+    </div>
+        <div class="panel-body">
+            {% set fecha = date() %}
+            <p class="text-center"> San Fernando Del Valle  de Catamarca,  {{ fecha  | date('l, j  F  Y') |replace({
+                    'January'  : 'de Enero de de ',
+                    'February' : 'de Febrero de',
+                    'March' : 'de Marzo de',
+                    'April' : 'de Abril de',
+                    'May' : 'de Mayo de',
+                    'June' : 'de Junio de',
+                    'July' : 'de Julio de',
+                    'August' : 'de Agosto de',
+                    'September' : 'de Septiembre de',
+                    'October' : 'de Octubre de',
+                    'November' : 'de Nombiembre de',
+                    'December' : 'de Diciembre de',
+                    'Monday'   : ' Lunes',
+                    'Tuesday'   : ' Martes',
+                    'Wednesday'   : ' Miércoles',
+                    'Thursday'   : ' Jueves',
+                    'Friday'   : ' Viernes',
+                    'Saturday'  : ' Sabado',
+                    'Sunday'   : ' Domingo'
+                }) }} 
+            </p>  
+
+            {% block tipodocumento %}
+               
+            {% endblock %}
+
+            {% block referencia %}
+        
+            {% endblock %}
+
+            {% block cuerpo %}
+              
+            {% endblock %}
+
+
+    </div> <!-- Panel-body-->
+</div>   <!-- Panel-->
+
+
+
+{% endblock %}

@@ -7,18 +7,17 @@
   
   {{ parent() }}
  <div class="container-fluid bg-grey">
-  <h2 class="text-center">CONTACTENOS</h2>
+<h2 class="text-center"> Informacion de Contacto</h2>
   <div class="row">
-    <div class="col-md-4" style="font-size:15px">
+     <div class="col-md-4" style="font-size:15px">
       <p><span class= "glyphicon glyphicon-map-marker"></span> San Fernando del Valle de Catamarca</p>
       <p><span class="glyphicon glyphicon-pushpin">  </span> Dirección: Ayacucho 586</p>
       <p><span class='glyphicon glyphicon-phone'></span> Teléfono: 0383- 4437758</p>
       <p><span class="glyphicon glyphicon-envelope"></span> dirrecmedico@catamarca.gov.ar</p>  
       <p> <span class="glyphicon glyphicon-time"></span> Contactenos en el Horario de 8:00 a 12:00 y de 16:00 a 20:00.</p>
     </div>
-    <hr>
-    <div class="col-md-6">
-      <div class="row">
+    {#   <hr>
+     <div class="row">
         <form action="">
         <div class="col-md-5 form-group">
           <input class="form-control" id="name" name="name" placeholder="Nombre" type="text" required/>
@@ -37,11 +36,11 @@
       </div>
     </div>
   </div>
-</div>
-<span> <p><<hr></p></span>
+</div> 
+<span> <p><<hr></p></span>#}
  <!-- Set height and width with CSS -->
-<div id="googleMap" style="height:400px;width:90%;"></div>
-
+<div id="googleMap" style="height:200px;width:50%;"></div>
+</div></div>
 <!-- Add Google Maps -->
 <script src="http://maps.googleapis.com/maps/api/js"></script>
 <script>

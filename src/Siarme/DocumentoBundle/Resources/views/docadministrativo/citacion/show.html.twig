@@ -1,10 +1,4 @@
 {% extends 'DocumentoBundle:docadministrativo:layout_show.html.twig' %}
-
-{% block tipodocumento %} CITACION  {% endblock %}
-{% block cuerpo %}
-    <p>DESTINATARIO:<strong>{{ docAdministrativo.tramite.expediente.agente }} - DNI:{{ docAdministrativo.tramite.expediente.agente.dni }}</strong></p>
-    <p>DESTINO: {{ docAdministrativo.tramite.expediente.agente.domicilio }} -Localidad: {{ docAdministrativo.tramite.expediente.agente.Localidad }} - Departamento: {{ docAdministrativo.tramite.expediente.agente.localidad.departamento }}</p>
-    <p>
-    ---------La Dirección Provincial de Reconocimientos Médicos, informa a Usted que debera presenterse en JUNTA MEDICA DE MEDICINA LABORAL para su evaluacion, munido de la documentacion que acredite su estado actual de salud,  el día <strong> {% if docAdministrativo.fechaTurnoCitacion %}{{ docAdministrativo.fechaTurnoCitacion|date('Y-m-d') }}{% endif %} </strong>en el horario <strong>{% if docAdministrativo.hora %}{{ docAdministrativo.hora|date('H:i') }}{% endif %}</strong>, sito Ayacucho 586 - Capital.- </p>
-    <p>---------Por motivos que se le daran a conocer oportunamente coforme a lo solicitado en el expediente de referencia.-</p>
+ {% block tipodocumento %}
+   <br> <p class="text-center"> <strong> {{ documento.tipoDocumento | upper }}  </strong> </p> <br>
 {% endblock %}

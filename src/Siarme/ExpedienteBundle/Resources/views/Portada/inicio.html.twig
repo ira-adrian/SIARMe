@@ -2,10 +2,14 @@
 
 {% block title 'Inicio' %}
 {% block body %}
-
 {{ parent() }}
 
+<div class="row"> 
+
+<div class="col-sm-offset-2 col-sm-8">
+
 <div class="alert alert-dismissible alert-info">
+
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Información: </strong> En esta página usted podrá consultar el estado de expedientes. Ej. 256-2016
   
@@ -24,6 +28,6 @@ La Dirección Provincial de Reconocimientos Médicos es una institución públic
 
 
     <h2></h2>
-
-    
+</div>
+</div>
 {% endblock %}

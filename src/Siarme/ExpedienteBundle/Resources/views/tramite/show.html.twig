@@ -10,29 +10,40 @@
             <li>
                 <a class="btn btn-info btn-sm" href="{{ path('backend_tramite_edit', { 'id': tramite.id }) }}">Editar</a>
             </li>
+{% if is_granted('ROLE_USUARIO') %} 
             <li>
                 {% if ((tramite.docmedico | length ) + (tramite.docadministrativo | length  ) + (tramite.turnoCitacion | length)  < 1) %}
-                {{ form_start(delete_form) }}
+                {{ form_start(delete_form, {'attr': {'onclick': 'return confirm("¿Desea ELIMINAR el tramite?")'}}) }}
                     <input class="btn btn-danger btn-sm" type="submit" value="Eliminar">
                 {{ form_end(delete_form) }}
                 {% endif %}
             </li>
+{% endif %}
+            <li>     <a class="btn btn-info btn-sm" id="printer"  value="Imprimir" role="button"> <span class="glyphicon glyphicon-print">  </span> Imprimir </a>
+            </li>
         </ul>
     </nav>
-    <div class="panel panel-default">
-        <div class="panel-heading text-center">  
-            <h4> Detalle de Tramite</h4>
+    <div id="print"  class="panel panel-default print">
+        <div class="panel-heading text-center">
+         <p class="text-small"> 
+            <img src="{{ asset('escudo.png') }}" alt="Escudo..." class="img-rounded" width="50" height="40"> <br>   
+            <small>Poder Ejecutivo <br>
+            Secretaria General De La Gobernacion<br>
+            Subsecretaria  De Recursos Humanos Gestion Pública<br>
+            DIRECCION PROVINCIAL DE RECONOCIMIENTOS MEDICOS </small>
+         </p>  
+            <h3> DETALLE DE TRAMITE</h3>
             <table>
                 <tbody class="h5">
                     <tr class="hidden">
                         <th>Id</th>
                         <td>{{ tramite.expediente.id }}</td>
                     </tr>
-                    <tr class="h3 text-info">
+                    <tr class="h4 text-info">
                         <th>Expediente: </th>
                         <td>{{ tramite.expediente }}</td>
                     </tr>
-                    <tr>
+                    <tr class="h4 text-info">
                         <th>Extracto: </th>
                         <td>{{ tramite.expediente.extracto }}</td>
                     </tr>

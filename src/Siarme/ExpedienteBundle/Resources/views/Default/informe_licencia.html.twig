@@ -1,0 +1,26 @@
+{# Siarme/ExpedienteBundle/Resources/views/Default/informe_licencia.html.twig #}
+{% extends 'ExpedienteBundle:Default:layout_informe_show.html.twig' %}
+        {% block tipodocumento %}
+            <h5 class="text-center"> Informe de LICENCIAS por CLASIFICACION</h5>
+            <h5 class="text-center">Desde la Fecha: <strong>{{ fechaDesde| date("m/d/Y") }}</strong> Hasta la Fecha: <strong>{{fechaHasta | date("m/d/Y")}}</strong> </h5>
+        {% endblock %}
+        {% block cuerpo %}
+        	<div class="conteiner-fluid">
+                 {% for clasificacion in clasificaciones %}
+                    <div class="col-md-4">
+                          <dl>
+                            <dt> {{clasificacion}}  expedientes: <span class="badge alert-info">{{ informe[clasificacion.clasificacion][clasificacion.clasificacion] }}</span>
+                            </dt>
+                             Cantidad de Licencias Otorgadas:
+                            {% for  tipoTramite in tipoTramites %}        
+                            {% set cant = informe[clasificacion.clasificacion][tipoTramite.descripcion]  %}
+                            {% if (cant > 0)%}
+                             <dd>{{ tipoTramite.descripcion }} <span class="badge"> {{ informe[clasificacion.clasificacion][tipoTramite.descripcion] }}  </span></dd>
+                            {% endif %}
+                            {% endfor %}
+                          </dl>
+                    </div>
+                    {% endfor %}
+        	</div>
+   {% endblock %}
+

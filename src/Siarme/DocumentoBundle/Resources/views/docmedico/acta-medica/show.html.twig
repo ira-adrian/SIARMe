@@ -1,0 +1,38 @@
+{% extends 'DocumentoBundle:docmedico:layout_show.html.twig' %}
+
+ {% block tipodocumento %}   <p class="text-center"> <strong> {{ documento.tipoDocumento | upper }}    N°: 0{{ documento.numero }} </strong> </p>
+{% endblock %}
+{% block cuerpo %}
+      <p class="text-uppercase text-left"> 
+        <strong>Referencia: </strong>{{documento.tramite.expediente}} - Extracto: {{documento.tramite.expediente.extracto}} <br>
+        <strong>Paciente: </strong><br>
+         {{documento.licencia.agente}} - DNI: {{ documento.licencia.agente.dni }} <br> 
+        Edad: {{ documento.licencia.agente.fechaNacimiento | age }}  - Antiguedad: {{ documento.licencia.agente.fechaAltaLaboral | age }} - Departamento: {{ documento.licencia.agente.localidad.departamento }} <br>
+        <strong>Lugar de Trabajo:</strong> <br>
+       <small>{% for cargo in documento.licencia.agente.cargo %} {{ cargo }} - {{ cargo.funcion }} - {{ cargo.revista }}{% endfor %} </small> 
+        <br>
+        
+        </p> 
+    <p  class="text-justify">
+        </strong> --------- LA  JUNTA  MÉDICA  DE MEDICINA LABORAL  de  la  Dirección  de  Reconocimiento Médicos, procede a examinar al Sr./a. <strong>{{ documento.licencia.agente }}</strong> y habiendo analizado los antecedentes de caso, efectuado el  examen  correspondiente,  evaluado  su  pronóstico  y  evolución   ha dictaminado: 
+    </p>
+    <br>
+    <p  class="text-justify">
+        <em><strong>---------{{ documento.dictamen }}</strong>  </em> 
+    </p>
+    <hr>
+    <p> 
+        Feccha Desde:   <strong>{% if documento.licencia.fechadesde %}{{ documento.licencia.fechadesde |date('d-m-Y') }} {% endif %}</strong>                -           Fecha Hasta:   <strong>{% if documento.licencia.fechahasta %}{{ documento.licencia.fechahasta |date('d-m-Y') }} {% endif %} </strong>
+    </p>
+    <p>
+        Diagnostico: <strong>{{documento.licencia.diagnostico}}  </strong> 
+    </p>
+    <p>
+        Diagnostico Codificado:<strong> {{documento.licencia.enfermedad}}  </strong> 
+    </p>
+
+    <br> 
+    <br>
+    <br>
+    <br>         
+{% endblock %}

@@ -72,10 +72,16 @@ class DefaultController extends Controller
     */
     public function showAction(Usuario $usuario)
     {
+      if ($usuario->getId() == $this->getUser()->getId() ){
        
         return $this->render('UsuarioBundle:usuario:show.html.twig', array(
             'usuario' => $usuario,
              ));
+      }else{
+      
+              throw $this->createAccessDeniedException();
+
+      }
     }
 
      /**

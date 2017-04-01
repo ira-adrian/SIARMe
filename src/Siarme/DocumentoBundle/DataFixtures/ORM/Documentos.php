@@ -21,7 +21,6 @@ use Siarme\AusentismoBundle\Entity\Enfermedad;
 use Siarme\AusentismoBundle\Entity\Organismo;
 use Siarme\UsuarioBundle\Entity\Usuario;
 use Siarme\ExpedienteBundle\Entity\Tramite;
-use Siarme\DocumentoBundle\Entity\TurnoCitacion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 /**
  * Fixtures de las entidades del Proyecto para
@@ -49,82 +48,59 @@ class Documentos extends AbstractFixture implements OrderedFixtureInterface, Con
          // Crear entre 0 y 5 Documentos de Prueba Para cada Usuario 
 
         $organismos = $manager->getRepository('AusentismoBundle:Organismo')->findAll();
-        $usuarios = $manager->getRepository('UsuarioBundle:Usuario')->findByRol("ROLE_ADMINISTRTIVO");
+       
         $tramites = $manager->getRepository('ExpedienteBundle:Tramite')->findAll();
 
-       // $tipodocs=  array('Nota', 'Proveido', 'Informe' ); 
 
         $tipo_docs =  $this->container->getParameter('tipodoc');
-        $tipodoc = $tipo_docs['administrativo']; //array (slug => documento) 
-        $numero = 0;
-        $numeroTyC=1;
 
-        foreach ($tramites as $tramite) {
 
-            $organismo = $organismos[array_rand($organismos)];
-            $tramite = $tramites[array_rand($tramites)];
-            $docAdministrativos = $manager->getRepository('DocumentoBundle:DocAdministrativo')->findByTipoDocumento("proveido");            
-            $numero= count($docAdministrativos);
-                 $numero=count($docAdministrativos);
+       // $docAdministrativos = $manager->getRepository('DocumentoBundle:DocAdministrativo')->findByTipoDocumento($tipodoc);            
+
+        $docAdministrativos = $manager->getRepository('DocumentoBundle:DocAdministrativo')->findAll();
+        $numero=count($docAdministrativos);
+
+foreach ($tramites as $tramite) {  
+                $usuarios = $manager->getRepository('UsuarioBundle:Usuario')->findByRol("ROLE_ADMINISTRATIVO");
+                
+                for ($i=1; $i <= rand(0,4); $i++) { 
+                $numero++; 
+                $tipodoc = $tipo_docs['administrativo']; //array (slug => documento) 
+                $organismo = $organismos[array_rand($organismos)];
+                $usuario = $usuarios[array_rand($usuarios)];
+                $slug = array_rand( $tipodoc, 1 );
                 $docAdministrativo = New DocAdministrativo();
                 $docAdministrativo->setFechaDocumento(new \DateTime('now - '.rand(1, 365).' days'));
                 $docAdministrativo->setNumero($numero);
                 $docAdministrativo->setDirigidoA($organismo->getOrganismo()."\n".$organismo->getResponsable());
                 $docAdministrativo->setTexto($this->getTexto());
-                $docAdministrativo->setUsuario(array_rand($usuarios));                
+                $docAdministrativo->setUsuario($usuario);                
                 $docAdministrativo->setTramite($tramite);
-                $manager->persist($docAdministrativo);
-                $docAdministrativo->setTipoDocumento("Proveido");
-                $docAdministrativo->setSlug("proveido");
- 
-                    $manager->flush();
-             }
-
-        $documento  = array('turno' => "Turno" , 'citacion' => "Citacion" ); 
-        foreach ($tramites as $tramite) {
-
-            if ($tramite->getEstadoTurnoCitacion()) {
-                $organismo = $organismos[array_rand($organismos)];
-                $tramite = $tramites[array_rand($tramites)];    
-    
-                $slug = array_rand($documento);
-                 $numeroTyC++;
-                 $docAdministrativo= New TurnoCitacion();
-                 $docAdministrativo->setNumero(1);
-                 $docAdministrativo->setfechaTurnoCitacion( new \DateTime('now + '.rand(1, 90).' days'));
-                 $docAdministrativo->setFechaDocumento(new \DateTime('now - '.rand(30, 90).' days'));
-                 $docAdministrativo->setHora( New \DateTime());
-                 $docAdministrativo->setAgente($tramite->getExpediente()->getAgente());
-                 $docAdministrativo->setEstado($tramite->getEstadoTurnoCitacion(true));
-                $docAdministrativo->setTramite($tramite);
-                $manager->persist($docAdministrativo);
-                $docAdministrativo->setTipoDocumento($documento[$slug]);
+                $docAdministrativo->setTipoDocumento($tipodoc[$slug]);
                 $docAdministrativo->setSlug($slug);
-                 $manager->flush();
-            }
-        }
+                if ((strcmp ($slug, "citacion") ==0) or (strcmp ($slug, "turno") ==0))  {
+                      $docAdministrativo->setEstado(true);
+                      } else {
+                      $docAdministrativo->setEstado(false);
+                      }
+                $manager->persist($docAdministrativo);  
+                }
+                  $manager->flush();                
+
+
          // Crear entre 0 y 5 Documentos de Prueba Para cada Usuario 
-
-        $organismos = $manager->getRepository('AusentismoBundle:Organismo')->findAll();
-        $usuarios = $manager->getRepository('UsuarioBundle:Usuario')->findAll();
-        $tramites = $manager->getRepository('ExpedienteBundle:Tramite')->findAll();
-
-        $tipo_docs =  $this->container->getParameter('tipodoc');
+        $usuarios = $manager->getRepository('UsuarioBundle:Usuario')->findByRol("ROLE_MEDICO");
         $tipodoc = $tipo_docs['medico']; //array (slug => documento) 
 
+        $docMedicos = $manager->getRepository('DocumentoBundle:DocMedico')->findAll();
+        $numero=count($docMedicos);
 
-        foreach ($usuarios as $usuario) {
             $organismo = $organismos[array_rand($organismos)];
-            $tramite = $tramites[array_rand($tramites)];
-
-            $docMedicos = $manager->getRepository('DocumentoBundle:DocMedico')->findAll();
-
-            $numero=count($docMedicos);
             for ($i=1; $i <= rand(0,4); $i++) { 
                 $numero++; 
 
                 $slug = array_rand( $tipodoc , 1 );
-           
+                $usuario = $usuarios[array_rand($usuarios)];
                 $docMedico = New DocMedico();
                 $docMedico->setTipoDocumento($tipodoc[$slug]);
                 $docMedico->setSlug($slug);
@@ -136,9 +112,8 @@ class Documentos extends AbstractFixture implements OrderedFixtureInterface, Con
                 $docMedico->setTramite($tramite);
                 $manager->persist($docMedico);
             }
-                    $manager->flush();
+                $manager->flush();
         }
-
 
     // Para cada Documento Medico crear  una Licencia
 
@@ -164,7 +139,7 @@ class Documentos extends AbstractFixture implements OrderedFixtureInterface, Con
        $licencia ->setFechaHasta($fechaHasta);
        $licencia ->setDocMedico($docMedico);
        $licencia ->setDiagnostico($enfermedades[array_rand($enfermedades)]->getEnfermedad());
-        $manager->persist($licencia);
+       $manager->persist($licencia);
         }
 
         $manager->flush();

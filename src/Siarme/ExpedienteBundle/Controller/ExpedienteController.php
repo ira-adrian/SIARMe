@@ -39,6 +39,7 @@ class ExpedienteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $expediente->setEstado(false);
             $em->persist($expediente);
             $em->flush($expediente);
 

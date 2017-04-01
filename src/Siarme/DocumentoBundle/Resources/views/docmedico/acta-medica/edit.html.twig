@@ -1,0 +1,11 @@
+{% extends 'DocumentoBundle:docmedico:layout_new.html.twig' %}
+
+{% block tipodocumento %} ACTA DE JUNTA MEDICA {% endblock %}
+{% block formulario %}
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+         <div class="text-right">
+                <input class="btn btn-danger" type="submit" value="Guardar" />
+         </div>
+    {{ form_end(edit_form) }}
+{% endblock %}

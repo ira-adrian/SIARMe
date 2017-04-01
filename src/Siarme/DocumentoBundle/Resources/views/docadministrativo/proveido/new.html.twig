@@ -1,16 +1,17 @@
 {% extends 'DocumentoBundle:docadministrativo:layout_new.html.twig' %}
 
-{% block tipodocumento %} PROVEIDO  {% endblock %}
-{% block formulario %}
-            {{ form_start(form) }}
-            {{ form_errors(form) }}
-            {{ form_row(form.fechaDocumento, {'label': 'Fecha:'}) }}
-            <div>
-            {{ form_row(form.dirigidoA, {'label': 'Se remiten las presentes actuaciones A:'}) }}
-            {{ form_row(form.texto, {'label': 'Motivo/Razon:'}) }}
-            </div>
-            <div class="text-right">
-                    <input class="btn btn-danger"  type="submit" value="GUARDAR" />
-            </div>
-             {{ form_end(form) }}
-{% endblock %}
+{% block tipodocumento %} {{ documento.tipoDocumento | upper }}    N°: 0{{ documento.numero }} {% endblock %}
+
+
+{% set dirigidoA1 %}
+   --------- {{documento.tramite.organismoOrigen}} 
+
+{% endset %}
+
+
+{% set texto1 %}
+        <p> ---------   Se remiten las actuaciones de referencia  para conocimiento y evaluación de lo Dictaminado por  Médica en <strong>Acta N°:     de Fecha: {{ "now"|date('Y-m-d') }}  del Paciente: {{documento.tramite.expediente.agente}}  , CUIL: {{documento.tramite.expediente.agente.cuil}} </strong>.
+        ---------   Son Fojas:  <br>
+        ---------   Atentamente.- </p>
+{% endset %}
+

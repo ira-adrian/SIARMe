@@ -32,7 +32,7 @@ class DocAdministrativo
     /**
      * @var string
      *
-     * @ORM\Column(name="dirigidoA", type="string", length=255)
+     * @ORM\Column(name="dirigidoA", type="string", length=255, nullable=true)
      */
     private $dirigidoA;
 
@@ -64,6 +64,13 @@ class DocAdministrativo
      */
     private $texto;
 
+     /**
+     * @var bool
+     *
+     * @ORM\Column(name="estado", type="boolean")
+     */
+    private $estado;
+
     /**
      * @var \DateTime
      *
@@ -82,6 +89,7 @@ class DocAdministrativo
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     private $tramite;
+
 
     /**
      * Get id
@@ -346,5 +354,27 @@ class DocAdministrativo
     {
        return  $this->getTipoDocumento();
     }
+    /**
+     * Set estado
+     *
+     * @param boolean $estado
+     *
+     * @return TurnoCitacion
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
 
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return boolean
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
 }

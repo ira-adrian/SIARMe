@@ -14,9 +14,9 @@ class DocAdministrativoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('fechaDocumento', 'date')
-                ->add('dirigidoA', 'textarea')
-                //->add('numero', 'number')
-                ->add('texto', 'textarea')
+                ->add('dirigidoA', 'textarea', array( 'required' => false ))
+                ->add('estado')
+                ->add('texto', 'ckeditor')
                 //->add('fechaCreacion')
                 //->add('usuario')
                 //->add('tramite') 

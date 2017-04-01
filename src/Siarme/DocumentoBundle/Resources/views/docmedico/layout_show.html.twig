@@ -1,98 +1,81 @@
-{% extends 'extranet.html.twig' %}
-{% block sidebar %} {% endblock %}
- {% block mensaje %} {% endblock %}
+
+{% extends 'extranet.html.twig' %} 
+
+{% block sidebar %} 
+{% endblock %}
+
 {% block main %}
-<div class="row"> 
-<div class="col-md-8">
     <nav class="navbar  navbar-info  navbar-fixed-bottom">
             <ul class="list-inline text-right" >
+                <li>            
+                    <a class="btn btn-info btn-sm" role="button"   href="{{ path('extranet_docmedico_edit', { 'id': documento.id }) }}" > <span class="glyphicon glyphicon-pencil"> </span>Editar</a>
+                </li>               
                 <li>
-                    <a class="btn btn-info btn-sm" role="button" href="{{ path('extranet_docmedico_edit', { 'id': docMedico.id }) }}"> <span class="glyphicon glyphicon-pencil"> </span>Editar</a>
-                </li>
-                <li>
-                     {{ form_start(delete_form) }}                      
-                        <input class="btn btn-danger btn-sm"  type="submit" value="Eliminar">
+                     {{ form_start(delete_form, {'attr': {'onclick': 'return confirm("¿Desea ELIMINAR el documento?")'}}) }}                      
+                        <input class="btn btn-danger btn-sm" type="submit" value="Eliminar">
                      {{ form_end(delete_form) }}
                 </li>
                 <li>
-                    <a class="btn btn-info btn-sm" role="button" href="{{ path('extranet_docmedico_edit', { 'id': docMedico.id }) }}">  <span class="glyphicon glyphicon-print"> </span> Imprimir </a>
-                </li>
-                <li></li>
+                      <a class="btn btn-info btn-sm" id="printer"  value="Imprimir" role="button"> <span class="glyphicon glyphicon-print">  </span> Imprimir </a>
+
+                </li><li>
                 <li></li>
             </ul>   
     </nav><!-- /.navbar-menu -->
+<div class="col-sm-offset col-sm-8">
 
-    <div class="panel panel-default">
-    <div class="panel-heading text-center">  
-        <small>Poder Ejecutivo <br>
+<div  id="print"  class="panel panel-default print">
+
+    <div class="panel-heading text-center"> 
+         <p> 
+            <img src="{{ asset('escudo.png') }}" alt="Escudo..." class="img-rounded" width="50" height="50"> <br>   
+            <small>Poder Ejecutivo <br>
             Secretaria General De La Gobernacion<br>
-            Subsecretaria  De Recursos Humanos Gestion y Pública<br>
-            DIRECCION PROVINCIAL SERVICIO DE RECONOCIMIENTO 
-        </small>
+            Subsecretaria  De Recursos Humanos Gestion Pública<br>
+            DIRECCION PROVINCIAL DE RECONOCIMIENTOS MEDICOS</small>
+         </p>
     </div>
-    <div class="panel-body">
-             <p class="text-center">   San Fernando Del Valle  de Catamarca,{% if docMedico.fechaDocumento %}{{ docMedico.fechaDocumento|date('l, j  F  Y')|replace({
-            'January'  : 'de Enero de de ',
-            'February' : 'de Febrero de',
-            'March' : 'de Marzo de',
-            'April' : 'de Abril de',
-            'May' : 'de Mayo de',
-            'June' : 'de Junio de',
-            'July' : 'de Julio de',
-            'August' : 'de Agosto de',
-            'September' : 'de Septiembre de',
-            'October' : 'de Octubre de',
-            'November' : 'de Nombiembre de',
-            'December' : 'de Diciembre de',
-            'Monday'   : ' Lunes',
-            'Tuesday'   : ' Martes',
-            'Wednesday'   : ' Miércoles',
-            'Thursday'   : ' Jueves',
-            'Friday'   : ' Viernes',
-            'Saturday'  : ' Sabado',
-            'Sunday'   : ' Domingo'
-        }) }}   {% endif %}  </p>  
-        <p></p>
-         <p class="text-center lead">{% block tipodocumento %} INFORME  MÉDICO {% endblock %} N°: 0{{ docMedico.numero }}</p>
-{% block cuerpo %}
-        <p  class="text-justify">
-            <strong>VISTO: </strong> <br> 
-            El Expediente {{docMedico.tramite.expediente}} Caratulado como
-            Extracto: {{docMedico.tramite.expediente.extracto | upper}}
-        </p> 
+        <div class="panel-body">
+            <p class="text-center"> San Fernando Del Valle  de Catamarca, {% if documento.fechaDocumento %} {{ documento.fechaDocumento|date('l, j  F  Y') |replace({
+                    'January'  : 'de Enero de de ',
+                    'February' : 'de Febrero de',
+                    'March' : 'de Marzo de',
+                    'April' : 'de Abril de',
+                    'May' : 'de Mayo de',
+                    'June' : 'de Junio de',
+                    'July' : 'de Julio de',
+                    'August' : 'de Agosto de',
+                    'September' : 'de Septiembre de',
+                    'October' : 'de Octubre de',
+                    'November' : 'de Nombiembre de',
+                    'December' : 'de Diciembre de',
+                    'Monday'   : ' Lunes',
+                    'Tuesday'   : ' Martes',
+                    'Wednesday'   : ' Miércoles',
+                    'Thursday'   : ' Jueves',
+                    'Friday'   : ' Viernes',
+                    'Saturday'  : ' Sabado',
+                    'Sunday'   : ' Domingo'
+                }) }}  {% endif %}  
+            </p>  
 
-        <p class="text-justify"><strong>CONSIDERANDO:</strong> <br>
-             Los elementos de juicio presentados en los autos de referencia, y teniendo en cuenta la valoración 
-            Clínica del examinado en el día de la fecha, esta  Junta  Medica, dependiente de la Dirección de Inspección Laboral:
-        </p>
+            {% block tipodocumento %}
+               
+            {% endblock %}
 
-        <p class="text-center"> <strong>DICTAMINA:</strong></p>
+            {% block referencia %}
+        
+            {% endblock %}
 
-        <p class="text-justify"><strong>PRIMERO:</strong> <br>
-            Que la patología denunciada por el/la  Sr/a: {{docMedico.licencia.agente}} D.N.I. N°: {{docMedico.licencia.agente.dni}} Edad:{{docMedico.licencia.agente.fechaNacimiento | age }} ,  Antigüedad:{{docMedico.licencia.agente.fechaAltaLaboral | age }} , Lugar de Trab: {% for cargo in docMedico.licencia.agente.cargo %} {{ cargo.organismo}} - {% endfor %} es: <em><strong> {{docMedico.licencia.articulo.descripcion}} </strong></em>
-        </p>
+            {% block cuerpo %}
+              
+            {% endblock %}
 
-        <p class="text-justify"><strong>SEGUNDO:</strong> <br>
 
-            <strong>Datos Asistenciales: </strong> <br>
-            Fecha de A.T .o E.P.: {{docMedico.licencia.fechaDesde | date('d-m-Y') }} ---  Fecha de Ingreso: {{docMedico.licencia.fechaDocumento | date('d-m-Y') }}  <br>
+    </div> <!-- Panel-body-->
+</div>   <!-- Panel-->
 
-            <strong>Diagnóstico:</strong> <br>
-            <p></p>
-            <em><strong>{{ docMedico.dictamen }}</strong> </em> 
-        </p>
 
-        <hr>
-        <p>Diagnostico Codificado:<strong> {{docMedico.licencia.enfermedad}}  </strong> </p>
-        <p>
-            Prestaciones en especie a seguir brindando (Prótesis, ortesis, etc.);..…………………….
-        </p> 
-                FECHA DE ALTA MÉDICA:   {{docMedico.licencia.fechaHasta | date('d-m-Y') }} 
-           <p></p>                
-    </div>
-    </div>
-    </div> <!--col-md.8-->
-    <div class="col-md-2"></div>
-</div><!--row-->
+
 {% endblock %}
-{% endblock %}
+

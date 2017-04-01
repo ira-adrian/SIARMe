@@ -1,72 +1,33 @@
-{% extends 'extranet.html.twig' %}
-{% block sidebar %} {% endblock %}
-{% block main %}
-<div class="col-sm-offset col-sm-8">
-    <nav class="navbar  navbar-info  navbar-fixed-bottom">
-            <ul class="list-inline text-right" >
-                <li>
-                	{% set path = tipodoc.administrativo[docAdministrativo.slug]["edit"] %}
-                    <a class="btn btn-info btn-sm" role="button" {% block href_editar %} href="{{ path(path , { 'id': docAdministrativo.id }) }}"> {% endblock %} <span class="glyphicon glyphicon-pencil"> </span>Editar</a>
-                </li>
-                <li>
-                	 {{ form_start(delete_form) }}                		
-                		<input class="btn btn-danger btn-sm"  type="submit" value="Eliminar">
-                     {{ form_end(delete_form) }}
-                </li>
-                <li>
-                    <a class="btn btn-info btn-sm" role="button" {% block href_imprimir %} href="{{ path('extranet_docadministrativo_edit', { 'id': docAdministrativo.id }) }}">  <span class="glyphicon glyphicon-print"> {% endblock %}</span> Imprimir </a>
-                </li>
-                <li></li>
-                <li></li>
-            </ul>   
-    </nav><!-- /.navbar-menu -->
+{% extends 'DocumentoBundle:Default:layout_base_show.html.twig' %}
 
-<div class="panel panel-default">
-<div class="panel-heading text-center"> <p> <small>Poder Ejecutivo <br>
-Secretaria General De La Gobernacion<br>
-Subsecretaria  De Recursos Humanos Gestion Pública<br>
-DIRECCION PROVINCIAL SERVICIO DE RECONOCIMIENTO </small></p>
-</div>
-  <div class="panel-body">
-    <p class="text-center"> San Fernando Del Valle  de Catamarca, {% if docAdministrativo.fechaDocumento %} {{ docAdministrativo.fechaDocumento|date('l, j  F  Y') |replace({
-            'January'  : 'de Enero de de ',
-            'February' : 'de Febrero de',
-            'March' : 'de Marzo de',
-            'April' : 'de Abril de',
-            'May' : 'de Mayo de',
-            'June' : 'de Junio de',
-            'July' : 'de Julio de',
-            'August' : 'de Agosto de',
-            'September' : 'de Septiembre de',
-            'October' : 'de Octubre de',
-            'November' : 'de Nombiembre de',
-            'December' : 'de Diciembre de',
-            'Monday'   : ' Lunes',
-            'Tuesday'   : ' Martes',
-            'Wednesday'   : ' Miércoles',
-            'Thursday'   : ' Jueves',
-            'Friday'   : ' Viernes',
-            'Saturday'  : ' Sabado',
-            'Sunday'   : ' Domingo'
-        }) }}  {% endif %}  </p>  
-    <p> <strong>{% block tipodocumento %}PROVEIDO {% endblock %} N°: 0{{ docAdministrativo.numero }} </strong> </p>
 
-        <p class="text-uppercase h6"> <strong>
-        Referencia: {{docAdministrativo.tramite.expediente}}<br>
-        Iniciador: {{docAdministrativo.tramite.expediente.agente}}  <br>
-        Extracto: {{docAdministrativo.tramite.expediente.extracto }} <br>
-        </strong>
+{% block href_editar %} 
+	href="{{ path('extranet_docadministrativo_edit' , { 'id': documento.id }) }}"
+{% endblock %}
 
-        </p> 
+{% block href_imprimir %}
+	href="{{ path('extranet_docadministrativo_print', { 'id': documento.id }) }}"
+{% endblock %}
+
+ {% block tipodocumento %}
+    <p> <strong> {{ documento.tipoDocumento | upper }}    N°: 0{{ documento.numero }} </strong> </p>
+{% endblock %}
+
+{% block referencia %}
+<p class="text-uppercase small"> <strong>
+Referencia: {{documento.tramite.expediente}}<br>
+Iniciador: {{documento.tramite.expediente.agente}}  <br>
+Extracto: {{documento.tramite.expediente.extracto }} <br>
+</strong>
+</p> <br>
+{% endblock %}
+
 {% block cuerpo %}
-        <p class="text-justify">-----------Remitanse las presentes actuaciones a:  <strong>{{ docAdministrativo.dirigidoA }}.</strong>
+    <p class ="text-justify">
 
-         {{ docAdministrativo.texto }}</p> 
+    <strong>    
+    {{ documento.dirigidoA | raw }}.
+    </strong>
+    
+    {{ documento.texto | raw }}</p> 
 {% endblock %}
-
-  </div> <!-- Panel-body-->
-</div>   <!-- Panel-->
-</div>
-
-{% endblock %}
-

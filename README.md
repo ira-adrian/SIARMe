@@ -99,6 +99,7 @@ Si prefieres usar otra como SQLite, sigue estos pasos:
      con datos de prueba:
 
 ```bash
+$ php app/console assetic:dump
 $ php app/console doctrine:database:create
 $ php app/console doctrine:schema:create
 $ php app/console doctrine:fixtures:load

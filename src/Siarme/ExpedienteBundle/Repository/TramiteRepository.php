@@ -37,4 +37,34 @@ class TramiteRepository extends EntityRepository
                  
         return $tramite[0];
     }
+
+
+    
+    public function findTramiteClasificacion($departamento , $clasificacion, $tipoTramite)
+    {
+        $em = $this->getEntityManager();
+     
+
+      $fechaDesde = new \DateTime('2013-01-01');
+      $fechaHasta = new \DateTime('2016-01-01');
+
+     $consulta = $em->createQuery(
+           'SELECT t
+            FROM ExpedienteBundle:Tramite t JOIN t.tipoTramite tt
+            JOIN t.expediente e                        
+            JOIN t.departamentoRm d
+            JOIN e.clasificacion c
+          WHERE t.departamentoRm= :id 
+          AND e.clasificacion= :idc 
+          AND t.fechaOrigen> :fec1 
+          AND t.fechaOrigen< :fec2 
+          AND  t.tipoTramite= :idr');
+      $consulta->setParameter('id', $departamento);
+      $consulta->setParameter('idc', $clasificacion);
+      $consulta->setParameter('idr', $tipoTramite);
+      $consulta->setParameter('fec1', $fechaDesde);
+      $consulta->setParameter('fec2', $fechaHasta);
+      $tramites = $consulta->getResult(); 
+      return $tramites;
+    }
 }

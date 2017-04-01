@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th class="h6"><strong>Tramites</strong></th>
-            <th>Letra-N°-Año</th>
+            <th>Expediente</th>
             <th>Agente</th>    
             <th>Extracto</th>
            {# <th>Observacion</th>#}
@@ -13,7 +13,6 @@
     <tbody>
     {% for expediente in expedientes %}
         <tr>
-
             <td>
                 {% if expediente.tramite | length > 0 %}
                      <button class="btn btn-info btn-xs" data-toggle="collapse" data-target=".{{expediente.id}}" aria-expanded="false" id="{{expediente.id}}"><span class="glyphicon glyphicon-plus"></span><strong> {{expediente.tramite | length}} </strong> </button> 
@@ -63,14 +62,16 @@
                                 <th>Organismodestino</th>
                                 <th>Fechadestino</th>#}
                                 <th>Estado</th>
+                                {% if not is_granted('ROLE_USUARIO') %}
                                 <th>Crear Documento</th>
+                                {% endif %}
                             </tr>
                         </thead>
                         <tbody> 
                              <tr>
                                 <td>               
-                                    {% if (tramite.docMedico | length > 0 ) or (tramite.docAdministrativo | length > 0 ) or (tramite.turnoCitacion | length > 0 )%}
-                                     <button class="btn btn-info btn-xs" data-toggle="collapse" data-target=".t-{{tramite.id}}" aria-expanded="false" id="t-{{tramite.id}}"><span class="glyphicon glyphicon-paperclip"></span><strong> {% set doc = (tramite.docMedico | length ) + ( tramite.docAdministrativo | length) + (tramite.turnoCitacion | length) %} {{ doc }}</strong> </button> 
+                                    {% if (tramite.docMedico | length > 0 ) or (tramite.docAdministrativo | length > 0 )%}
+                                     <button class="btn btn-info btn-xs" data-toggle="collapse" data-target=".t-{{tramite.id}}" aria-expanded="false" id="t-{{tramite.id}}"><span class="glyphicon glyphicon-paperclip"></span><strong> {% set doc = (tramite.docMedico | length ) + ( tramite.docAdministrativo | length) %} {{ doc }}</strong> </button> 
                                  {% else %}
                                     <span class="glyphicon glyphicon-exclamation-sign"></span> 
                                 {% endif %}
@@ -82,10 +83,7 @@
                                 
                                  <td>
                                     {% if tramite.fechaOrigen %}{{ tramite.fechaOrigen|date('Y-m-d') }}{% endif %}
-                                  </td>
-                                {#<td>{{ tramite.organismoOrigen }}</td> 
-                                <td>{{ tramite.organismoDestino }}</td>
-                                <td>{% if tramite.fechaDestino %}{{ tramite.fechaDestino|date('Y-m-d') }}{% endif %}</td>#}
+                                  </td>  
 
                                 <td>
                                   {% if tramite.estado %}Concluido{% else %}Transito{% endif %}
@@ -93,7 +91,8 @@
                                 
                                 <td>
                                   <ul class="list-inline">
-      {% if is_granted('ROLE_ADMINISTRATIVO') %}
+
+      {% if is_granted('ROLE_ADMINISTRATIVO') and ( not tramite.estado )  %}
                                      <li class="dropdown">
                                         <a class="dropup" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon glyphicon-file"><small>Administrativo</small></span></a>
                                         <ul class="dropdown-menu">
@@ -101,20 +100,21 @@
                                            {% for slug in tipodoc.administrativo | keys %}
 
                                           <li>
-                                            {% set path = tipodoc.administrativo[slug]["path"] %}
-                                            <a href="{{ path( path , { 'slug': slug , 'id': tramite.id } ) }}"> {{ tipodoc.administrativo[slug]["nombre"] }}</a> 
+                                            
+                                            <a href="{{ path( 'extranet_docadministrativo_new' , { 'slug': slug , 'id': tramite.id } ) }}"> {{ tipodoc.administrativo[slug] }}</a> 
                                           </li>
 
                                           {% endfor %} 
                                         </ul>
                                     </li>
       {% endif %}
-      {% if is_granted('ROLE_MEDICO') or  is_granted('ROLE_PSIQUIATRA') %}      
+
+      {% if is_granted('ROLE_MEDICO')  and ( not tramite.estado ) %}      
                                     <li class="dropdown">
                                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus-sign"><small>Medico</small></span></a>
                                         <ul class="dropdown-menu">
                                           
-
+                      
                                            {% for slug in tipodoc.medico | keys %}
 
                                           <li>
@@ -125,32 +125,21 @@
                                         </ul>
                                     </li>
       {% endif %}
+
                                    </ul>
                                 </td>
-                                {#<td> 
-                                    <ul>
-                                      <li> <a class="btn btn-danger btn-xs" href="">Citar</a></li>
-                                      <li> <a class="btn btn-danger btn-xs" href="">Turno</a></li>
-                                    </ul>
-
-                                </td>#}                
+          
                             </tr>
                             <tr>
                                 <td colspan="8">
                                 <div class="conteiner-fluid"> 
-                                   {% for docMedico in tramite.docmedico %}                                                         
+                                   {% for docMedico in tramite.docmedico %}                                     
                                       <div class="collapse out budgets t-{{tramite.id}}">
                                        {{ include('ExpedienteBundle:Extranet:_detalle_docmedico.html.twig') }}
                                        </div>                        
                                    {% endfor %}
-                                  {% for docAdministrativo in tramite.docadministrativo %} 
-                                      
-                                    <div class="collapse out budgets t-{{tramite.id}}">
-                                        {{ include('ExpedienteBundle:Extranet:_detalle_docadministrativo.html.twig') }}
-                                     </div>                                     
-                                  {% endfor %}
-                                  {% for docAdministrativo in tramite.turnocitacion %} 
-                                      
+
+                                  {% for docAdministrativo in tramite.docadministrativo %}                                       
                                     <div class="collapse out budgets t-{{tramite.id}}">
                                         {{ include('ExpedienteBundle:Extranet:_detalle_docadministrativo.html.twig') }}
                                      </div>                                     

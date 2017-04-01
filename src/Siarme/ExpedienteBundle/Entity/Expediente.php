@@ -86,7 +86,7 @@ class Expediente
 
 
     /** 
-     *@ORM\OneToMany(targetEntity="Siarme\ExpedienteBundle\Entity\Tramite", mappedBy="expediente")
+     *@ORM\OneToMany(targetEntity="Siarme\ExpedienteBundle\Entity\Tramite", mappedBy="expediente", cascade={"persist","remove"})
      */
     private $tramite;
 

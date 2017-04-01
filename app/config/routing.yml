@@ -1,4 +1,9 @@
-
+# app/config/routing.yml
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+    
 ausentismo:
     resource: "@AusentismoBundle/Controller/"
     type:     annotation
@@ -11,7 +16,7 @@ usuario:
 
 expediente_backend_expediente:
     resource: "@ExpedienteBundle/Resources/config/routing/expediente.yml"
-    prefix:   /extranet/expediente
+    prefix:   /intranet/expediente
 
 expediente:
     resource: "@ExpedienteBundle/Controller/"
@@ -22,7 +27,3 @@ documento:
     resource: "@DocumentoBundle/Controller/"
     type:     annotation
     prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation

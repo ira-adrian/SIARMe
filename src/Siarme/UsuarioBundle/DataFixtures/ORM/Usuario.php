@@ -41,8 +41,8 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
         $departamentosRm = $manager->getRepository('AusentismoBundle:DepartamentoRm')->findAll();
 
         // Crear los Roles de Usuario
-        $roles = array( "ROLE_ADMINISTRATIVO", "ROLE_USUARIO", "ROLE_MEDICO", "ROLE_PSIQUIATRA");
-        $usuarios = array( "administrativo", "mesaentrada", "medico", "psiquiatra");
+        $roles = array( "ROLE_ADMINISTRATIVO", "ROLE_USUARIO", "ROLE_MEDICO", "ROLE_ADMIN");
+        $usuarios = array( "administrativo", "empleado", "medico","admin");
 
 
         // Crear los 5 usuarios de Prueba de la aplicacion
@@ -90,7 +90,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
 
 
         // Crear los 20 usuarios de Prueba de la aplicacion
-        for ($i=1; $i<=20; $i++) {
+        for ($i=1; $i<=30; $i++) {
             $usuario = new Usuario();
 
             $usuario->setApellidoNombre($this->getApellidos().' '.$this->getNombre());

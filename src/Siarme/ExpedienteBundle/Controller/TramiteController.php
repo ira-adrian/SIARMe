@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Tramite controller.
  *
- * @Route("extranet/tramite")
+ * @Route("intranet/tramite")
  */
 class TramiteController extends Controller
 {
@@ -88,8 +88,10 @@ class TramiteController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('backend_tramite_edit', array('id' => $tramite->getId()));
+              $this->get('session')->getFlashBag()->add(
+                    'mensaje-info',
+                    'EL tramite por :<strong>  '.$tramite.'</strong> fue MODIFICADO');
+            return $this->redirectToRoute('backend_tramite_show', array('id' => $tramite->getId()));
         }
 
         return $this->render('ExpedienteBundle:tramite:edit.html.twig', array(

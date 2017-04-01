@@ -13,27 +13,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 /**
  * Docadministrativo controller.
  *
- * @Route("extranet/docadministrativo")
+ * @Route("intranet/docadministrativo")
  */
 class DocAdministrativoController extends Controller
 {
-    /**
-     * Lists all docAdministrativo entities.
-     *
-     * @Route("/", name="extranet_docadministrativo_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $docAdministrativos = $em->getRepository('DocumentoBundle:DocAdministrativo')->findAll();
-
-        return $this->render('DocumentoBundle:docadministrativo:/'.$slug.'/index.html.twig', array(
-            'docAdministrativos' => $docAdministrativos,
-        ));
-    }
-
     /**
      * Creates a new docAdministrativo entity.
      *
@@ -51,7 +34,7 @@ class DocAdministrativoController extends Controller
          // ### Buscar El tipo de documento y sus valores ##
         $tipo_docs = $this->getParameter('tipodoc');
         $tipodoc = $tipo_docs['administrativo'];
-        $docAdministrativo->setTipoDocumento($tipodoc[$slug]["nombre"]);
+        $docAdministrativo->setTipoDocumento($tipodoc[$slug]);
 
         $form = $this->createForm('Siarme\DocumentoBundle\Form\DocAdministrativoType', $docAdministrativo);
         $form->handleRequest($request);
@@ -67,15 +50,15 @@ class DocAdministrativoController extends Controller
         }
 
         return $this->render('DocumentoBundle:docadministrativo:/'.$slug.'/new.html.twig', array(
-            'docAdministrativo' => $docAdministrativo,
+            'documento' => $docAdministrativo,
             'form' => $form->createView(),
         ));
     }
 
-    /**
+     /**
      * Finds and displays a docAdministrativo entity.
      *
-     * @Route("/{id}", name="extranet_docadministrativo_show")
+     * @Route("/{id}/show", name="extranet_docadministrativo_show")
      * @Method("GET")
      */
     public function showAction(DocAdministrativo $docAdministrativo)
@@ -85,10 +68,11 @@ class DocAdministrativoController extends Controller
         $slug = $docAdministrativo->getSlug();
 
         return $this->render('DocumentoBundle:docadministrativo:/'.$slug.'/show.html.twig', array(
-            'docAdministrativo' => $docAdministrativo,
+            'documento' => $docAdministrativo,
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
 
     /**
      * Displays a form to edit an existing docAdministrativo entity.
@@ -105,11 +89,15 @@ class DocAdministrativoController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('extranet_docadministrativo_edit', array('id' => $docAdministrativo->getId()));
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje-info',
+                    'Se guardaron los cambios del documento <strong> '.$docAdministrativo.' </strong> con EXITO...');
+
+            return $this->redirectToRoute('extranet_docadministrativo_show', array('id' => $docAdministrativo->getId()));
         }
         $slug = $docAdministrativo->getSlug();
         return $this->render('DocumentoBundle:docadministrativo:/'.$slug.'/edit.html.twig', array(
-            'docAdministrativo' => $docAdministrativo,
+            'documento' => $docAdministrativo,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -118,7 +106,7 @@ class DocAdministrativoController extends Controller
     /**
      * Deletes a docAdministrativo entity.
      *
-     * @Route("/{id}", name="extranet_docadministrativo_delete")
+     * @Route("/{id}/delete", name="extranet_docadministrativo_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, DocAdministrativo $docAdministrativo)
@@ -130,9 +118,12 @@ class DocAdministrativoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($docAdministrativo);
             $em->flush($docAdministrativo);
+            $this->get('session')->getFlashBag()->add(
+                    'mensaje-info',
+                    'El documento <strong> '.$docAdministrativo.' </strong> fue ELIMINADO...');
         }
 
-        return $this->redirectToRoute('extranet_docadministrativo_index');
+        return $this->redirectToRoute('extranet');
     }
 
     /**

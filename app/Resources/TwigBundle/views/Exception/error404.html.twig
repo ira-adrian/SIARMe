@@ -1,9 +1,8 @@
-{% extends '::frontend.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block title %}Se ha producido un error{% endblock %}
-{% block id 'error' %}
 
-{% block article %}
+{% block main %}
     {% if exception.message %}
         <h1>{{ exception.message }}</h1>
     {% else %}
@@ -15,8 +14,6 @@
 
     <p>Prueba a actualizar la página dentro de unos instantes y seguramente
         podrás acceder a la página solicitada. Si el error persiste,
-        te agradeceríamos que nos avisaras en la dirección errores@cupon.com</p>
+        te agradeceríamos que nos avisaras en la dirección errores@siarme.com.ar</p>
 {% endblock %}
 
-{% block aside %}
-{% endblock %}

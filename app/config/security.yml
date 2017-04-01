@@ -7,18 +7,7 @@ security:
             entity:
                 class: UsuarioBundle:Usuario
                 property: usuario
-        # Usuarios de la extranet
-        #agentes:
-         #   entity: { class: Siarme\AusentismoBundle\Entity\Agente, property: usuario }
-        # Usuarios del backend
- #       administradores:
-  #          memory:
-   #             users:
-                    # encriptado bcrypt pass(1234):  $2y$13$.WHHRIwltX9xGg.vj4hX1eAlInAaKtd4RgMq5oiWrjjhJo2Estir
-                    #user = admin, pass = 1234
-    #                admin: { password: $2y$13$.WHHRIwltX9xGg.vj4hX1eAlInAaKtd4RgMq5oiWrjjhJo2Estir , roles: ROLE_ADMIN }
-     #               adrian: { password: $2y$13$5I.fTbRCuahPvcCInl462On57sPWl825DdXia9TGHL1Os3l7Z9GGu , roles: ROLE_USUARIO}
-
+ 
     # EL ORDEN DE LOS FIRWALLS INFLUYE EN CUANTO A LA RESTRICCION UNOS SON MAS GENERALES POR LO 
     #QUE TENDRAN QUE DEFINISRSE DESPUES
     firewalls:
@@ -27,43 +16,35 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        extranet:
+        intranet:
             pattern: ^/*
             provider: usuarios
             anonymous: ~
             form_login: 
                 login_path: usuario_login
                 check_path: usuario_login_check
-               # default_target_path: extranet
+                #default_target_path: extranet
                 #always_use_default_target_path: true
 
             logout:
                 path: usuario_logout
-                target: usuario_login
+                target: portada_estatica
 
             # Mantiene al usuario iniciada la seccion por 3600 seg
            # remember_me:
             #    key: cupon1234
              #   lifetime: 3600  
 
-        #main:
-         #   anonymous: ~
-            # activate different ways to authenticate
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
         - { path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/informacion/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # Control de acceso para mas de un usuario
-
-        - { path: ^/extranet/docmedico/*, roles:  [ ROLE_ADMINISTRATIVO, ROLE_MEDICO, ROLE_PSIQUIATRA ] }
-        - { path: ^/extranet/docadministrativo/*, roles:  [ ROLE_ADMINISTRATIVO] }
-
-        - { path: ^/extranet/*, roles:  [ ROLE_ADMINISTRATIVO, ROLE_USUARIO, ROLE_MEDICO, ROLE_PSIQUIATRA ] }
+        - { path: ^/admin/*, roles: ROLE_ADMIN }
+        - { path: ^/intranet/docmedico/*, roles:  [ ROLE_MEDICO] }
+        - { path: ^/intranet/docadministrativo/*, roles:  [ ROLE_ADMINISTRATIVO, ROLE_MEDICO] }
+        - { path: ^/intranet/informe/*, roles:  [ ROLE_ADMINISTRATIVO] }
+        - { path: ^/intranet/*, roles:  [ ROLE_ADMINISTRATIVO, ROLE_USUARIO, ROLE_MEDICO ] }
 
     encoders:
         # '6' hará que la codificación sea muy rápida ... pero insegura se recomienda po defecto: bcrypt que tendria cost:10

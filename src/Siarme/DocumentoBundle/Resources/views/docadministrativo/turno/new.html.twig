@@ -1,14 +1,22 @@
 {% extends 'DocumentoBundle:docadministrativo:layout_new.html.twig' %}
 
-{% block tipodocumento %} TURNO DE JUNTA MEDICA  {% endblock %}
-{% block formulario %}
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
-        {{ form_row(form.fechaDocumento, {'label': 'Fecha:'}) }}
-        {{ form_row(form.fechaTurnoCitacion, {'label': 'Fecha de Turno:'}) }}
-        {{ form_row(form.hora, {'label': 'Hora:'}) }}
-        <div class="text-right">
-                <input class="btn btn-danger"  type="submit" value="Guardar" />
-        </div>
-         {{ form_end(form) }}
-{% endblock %}
+{% block tipodocumento %} {{ documento.tipoDocumento | upper }} {% endblock %}
+
+{% set dirigidoA1 %}
+   --------- {{documento.tramite.organismoOrigen}} 
+
+{% endset %}
+
+
+{% set texto1 %}
+    <p>---------  El Médico Auditor de la Dirección Provincial de Reconocimientos Médicos, hace constar por la presente que el  <strong>  Agente: {{documento.tramite.expediente.agente}} , CUIL: {{documento.tramite.expediente.agente.cuil}} </strong>,  debera presentarse el día <strong> {{ "now"|date('Y-m-d') }} </strong> en Junta Médica en el horario matutino de 8:00 a 12:00, por tramites referidos a su expediente de referencia. <br>
+    ---------  Se expide la presente que sello y firmo para ser presentada ante las autoridades que la requieran</p>
+{% endset %}
+
+ {% block dirigidoA %}
+     <div class="hidden">
+     {{ form_label(form.texto) }}
+     {{ form_errors(form.texto) }}
+     {{ form_widget(form.dirigidoA, {'label': 'Dirigido A:'}) }}
+     </div>
+ {% endblock %}
