@@ -79,7 +79,7 @@ problema de permisos. En el libro se explica detalladamente cómo solucionarlo,
 pero una solución rápida puede ser ejecutar el siguiente comando:
 
 ```bash
-$ cd proyectos/Cupon/
+$ cd proyectos/SIARMe/
 $ chmod -R 777 app/cache app/logs
 ```
 
@@ -137,14 +137,4 @@ Backend
     * Nombre de usuario: `admin`
     * Contraseña: `1234`
     
-Test unitarios y funcionales
-----------------------------
 
-La aplicación incluye varios test unitarios y funcionales de ejemplo. Para
-ejecutarlos debes tener la herramienta
-[PHPUnit](https://github.com/sebastianbergmann/phpunit/) instalada. Después,
-ejecuta el siguiente comando en el directorio raíz del proyecto:
-
-```bash
-$ phpunit -c app
-```
